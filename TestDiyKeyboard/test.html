@@ -63,7 +63,7 @@
                 var widthScreen = window.screen.width;
                 var widthScroll = document.body.scrollWidth;
                 var ratio = window.devicePixelRatio;
-                var shareInfo = JSON.stringify({"type": "1", "inputid": e,"frame":{"top":inputOffsetTop,"left":inputOffsetLeft,"width":sizeObj.width,"height":sizeObj.height,"screen_ratio":widthScroll/widthScreen,"ratio":ratio}});
+                var shareInfo = JSON.stringify({"type": "1", "inputid": e,"frame":{"top":inputOffsetTop,"left":inputOffsetLeft,"width":sizeObj.width,"height":sizeObj.height,"screen_ratio":widthScroll/widthScreen,"ratio":ratio,"widthScreen":widthScreen,"widthScroll":widthScroll}});
                 AppJS.showKeyBoard(shareInfo);
             }
         var picCallback = function(photos) {
