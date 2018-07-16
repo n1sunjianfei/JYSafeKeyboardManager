@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+<!--        <meta charset="UTF-8">-->
+
+            <meta name="viewport" content="user-scalable=no">
+    </head>
+    <body style="font-size:30px;line-height:200px">
+        <div style="margin-top: 100px">
+            <h1>Objective-C和JavaScript交互-安全键盘</h1>
+            <input style="font-size:50px" type="button" value="调起字母键盘" onclick="showKeyBoard01('inputid01')">
+                </div>
+        
+        <div >
+            <input style="font-size:50px" type="button" value="调起数字键盘" onclick="showKeyBoard02('inputid01')">
+                </div>
+        <div>
+            <input style="font-size:50px" id = "inputid01" type="text" value="shuruwenzi" onclick="showKeyBoard02('inputid01')">
+                </div>
+        <div>
+            <input style="font-size:50px" id = "inputid02" type="text" value="shuruwenzi" onclick="showKeyBoard02('inputid02')">
+                </div>
+        <div>
+            <input style="font-size:50px" id = "inputid03" type="text" value="shuruwenzi" onclick="showKeyBoard02('inputid03')">
+                </div>
+        <div>
+            <input style="font-size:50px" id = "inputid04" type="text" value="shuruwenzi" onclick="showKeyBoard02('inputid04')">
+                </div>
+        <div>
+            <input style="font-size:50px" id = "inputid05" type="text" value="shuruwenzi" onclick="showKeyBoard02('inputid05')">
+                </div>
+        <div>
+            <input style="font-size:50px" id = "inputid06" type="text" value="shuruwenzi" onclick="showKeyBoard02('inputid06')">
+                </div>
+        <div>
+            <input style="font-size:50px" id = "inputid07" type="text" value="shuruwenzi" onclick="showKeyBoard02('inputid07')">
+                </div>
+        <div>
+            <input style="font-size:50px" id = "inputid08" type="text" value="shuruwenzi" onclick="showKeyBoard02('inputid08')">
+                </div>
+        <div>
+            <input style="font-size:50px" id = "inputid09" type="text" value="shuruwenzi" onclick="showKeyBoard02('inputid09')">
+                </div>
+        <div>
+            <input style="font-size:50px" id = "inputid10" type="text" value="shuruwenzi" onclick="showKeyBoard02('inputid10')">
+                </div>
+        
+        <script>
+            var showKeyBoard01 = function(e) {
+                var shareInfo = JSON.stringify({"type": "0", "inputid": e});
+                AppJS.showKeyBoard(shareInfo);
+            }
+        
+            var showKeyBoard02 = function(e) {
+                var input = document.getElementById(e); // 根据ID取得元素对象
+                var sizeObj = input.getBoundingClientRect(); // 取得元素距离窗口的绝对位置
+                // 窗口的滚动偏移（垂直、水平）
+                var bodyOffset = {top: document.body.scrollTop, left: document.body.scrollLeft};
+                
+                // 元素相对于页面的绝对位置 = 窗口滚动偏移 + 元素相对于窗口的绝对位置
+                var inputOffsetTop = sizeObj.top + bodyOffset.top; // 距顶部
+                var inputOffsetLeft = sizeObj.left + bodyOffset.left; // 距左侧
+                var widthScreen = window.screen.width;
+                var widthScroll = document.body.scrollWidth;
+                var ratio = window.devicePixelRatio;
+                var shareInfo = JSON.stringify({"type": "1", "inputid": e,"frame":{"top":inputOffsetTop,"left":inputOffsetLeft,"width":sizeObj.width,"height":sizeObj.height,"screen_ratio":widthScroll/widthScreen,"ratio":ratio}});
+                AppJS.showKeyBoard(shareInfo);
+            }
+        var picCallback = function(photos) {
+            alert(photos);
+        }
+        
+        var showKeyBoard01Callback = function(){
+            alert('success');
+        }
+        </script>
+    </body>
+</html>
