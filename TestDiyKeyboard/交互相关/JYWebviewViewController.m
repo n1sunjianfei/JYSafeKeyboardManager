@@ -73,6 +73,7 @@ static NSString * const JY_JSContextPath = @"documentView.webView.mainFrame.java
     webView.keyboardDisplayRequiresUserAction = NO;
     self.webView = webView;
     [self.view addSubview:webView];
+    
 }
 
 - (void)loadRequest {
