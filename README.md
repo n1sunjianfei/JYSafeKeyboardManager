@@ -27,4 +27,7 @@
 5、设置仓储值
     
     [JYSafeKeyboardConfigure defaultManager].storeValue = 5000.0;
+6、是否使用InputAccessView
+
+    [[JYSafeKeyboardConfigure defaultManager] setIsUsedInputAccessView:NO];
 
