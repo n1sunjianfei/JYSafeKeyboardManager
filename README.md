@@ -20,3 +20,11 @@
     NSLog(@"%@",dic);
     [JYSafeKeyboardManager useWebViewSafeKeyboardWithType:[dic[@"type"] integerValue] inputId:dic[@"inputid"] webView:self.webview frameDic:frameDic];
     }
+4、设置各种键盘的颜色属性
+    
+    [[JYSafeKeyboardConfigure defaultManager] setKeyboardBackgroundColor:[UIColor redColor]];
+
+5、设置仓储值
+    
+    [JYSafeKeyboardConfigure defaultManager].storeValue = 5000.0;
+
