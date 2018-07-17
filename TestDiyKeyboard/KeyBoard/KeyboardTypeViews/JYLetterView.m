@@ -8,7 +8,7 @@
 
 #import "JYLetterView.h"
 #import "UIButton+SafeKeyboard.h"
-#import "JYKeyboardConstant.h"
+#import "JYSafeKeyboardConfigure.h"
 #import "UIView+KeyboardExtension.h"
 @interface JYLetterView()
 @property(nonatomic,copy) NSString *lowercaseString;
@@ -81,7 +81,7 @@
     CGFloat width = CGRectGetWidth(self.bounds);
     CGFloat height = CGRectGetHeight(self.bounds);
     UIView *numberView = [[UIView alloc]initWithFrame:self.bounds];
-    numberView.backgroundColor = Keyboard_BackgroundColor;
+    numberView.backgroundColor = [JYSafeKeyboardConfigure defaultManager].keyboardBackgroundColor;
     [self addSubview:numberView];
     CGFloat midMargin = 5;
     CGFloat minMaigin = 2;//第一行的左右边界。
@@ -116,7 +116,7 @@
             case 26:{//第三行大小写锁定按钮
                 CGFloat leftMargin = minMaigin;
                 frame = CGRectMake(leftMargin, midMargin*3+itemHeight*2, functionItemWidth, itemHeight);
-                btnColor = Keyboard_FunctionItem_BackgroundColor;
+                btnColor = [JYSafeKeyboardConfigure defaultManager].functionItemBackgroundColor;
                 if(self.isLower){
                     image = [UIImage imageNamed:@"up1.png"];
                 }else{
@@ -128,21 +128,21 @@
             case 27:{//第三行删除按钮
                 CGFloat leftMargin = minMaigin;
                 frame = CGRectMake(width - leftMargin - functionItemWidth, midMargin*3+itemHeight*2, functionItemWidth, itemHeight);
-                btnColor = Keyboard_FunctionItem_BackgroundColor;
+                btnColor = [JYSafeKeyboardConfigure defaultManager].functionItemBackgroundColor;
                 image = [UIImage imageNamed:@"delete.png"];
             }
                 break;
             case 28:{//第四行切换输入法按钮
                 CGFloat leftMargin = minMaigin;
                 frame = CGRectMake(leftMargin, midMargin*4+itemHeight*3, leftMargin03-minMaigin - midMargin, itemHeight);
-                btnColor = Keyboard_FunctionItem_BackgroundColor;
+                btnColor = [JYSafeKeyboardConfigure defaultManager].functionItemBackgroundColor;
                 title = @"123";
             }
                 break;
             case 29:{//第四行空格按钮
                 CGFloat leftMargin = leftMargin03;
                 frame = CGRectMake(leftMargin, midMargin*4+itemHeight*3,6*(letterItemWidth+midMargin)+letterItemWidth, itemHeight);
-                btnColor = Keyboard_InputItem_BackgroundColor;
+                btnColor = [JYSafeKeyboardConfigure defaultManager].inputItemBackgroundColor;
                 //            image = [UIImage imageNamed:@"space.png"];
                 title = @"久雅安全键盘";
             }
@@ -150,7 +150,7 @@
             case 30:{//第四行完成按钮
                 CGFloat leftMargin = width - (leftMargin03-minMaigin - midMargin) - minMaigin;
                 frame = CGRectMake(leftMargin, midMargin*4+itemHeight*3, leftMargin03-minMaigin - midMargin, itemHeight);
-                btnColor = Keyboard_FunctionItem_BackgroundColor;
+                btnColor = [JYSafeKeyboardConfigure defaultManager].functionItemBackgroundColor;
                 title = @"完成";
             }
                 break;
@@ -161,7 +161,7 @@
 
         if(i<26){
             title = dataSource[i];
-            btnColor = Keyboard_InputItem_BackgroundColor;
+            btnColor = [JYSafeKeyboardConfigure defaultManager].inputItemBackgroundColor;
         }
         
         UIButton *button = [UIButton createButton:frame title:title tag:i image:image selector:@selector(click:)];
@@ -174,7 +174,7 @@
             [button setImageEdgeInsets:UIEdgeInsetsMake((button.keyboard_h-imageHeight)/2, (button.keyboard_w-imageHeight)/2, (button.keyboard_h-imageHeight)/2, (button.keyboard_w-imageHeight)/2)];
         }
         if (i==29) {
-            [button setTitleColor:Keyboard_WhiteSpace_TextColor forState:UIControlStateNormal];
+            [button setTitleColor:[JYSafeKeyboardConfigure defaultManager].whiteSpaceTextColor forState:UIControlStateNormal];
         }
         button.layer.cornerRadius = 10;
         [numberView addSubview:button];

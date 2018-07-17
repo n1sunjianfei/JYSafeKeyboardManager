@@ -19,21 +19,24 @@
 		C7380E0E20F6E680000E2207 /* UIView+KeyboardExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = C7380E0D20F6E680000E2207 /* UIView+KeyboardExtension.m */; };
 		C7380E1120F72573000E2207 /* JYLetterView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7380E0F20F72573000E2207 /* JYLetterView.m */; };
 		C7380E1320F75ADB000E2207 /* test.html in Resources */ = {isa = PBXBuildFile; fileRef = C7380E1220F75ADB000E2207 /* test.html */; };
+		C739D88920FD87E200959C87 /* JYSafeKeyboardConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = C739D88820FD87E200959C87 /* JYSafeKeyboardConfigure.m */; };
+		C739D88C20FDB48D00959C87 /* JYNumberView02.m in Sources */ = {isa = PBXBuildFile; fileRef = C739D88B20FDB48D00959C87 /* JYNumberView02.m */; };
 		C74E596520F5AA18002F9253 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C74E596420F5AA18002F9253 /* AppDelegate.m */; };
 		C74E596820F5AA18002F9253 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C74E596720F5AA18002F9253 /* ViewController.m */; };
-		C74E596B20F5AA18002F9253 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C74E596920F5AA18002F9253 /* Main.storyboard */; };
 		C74E596D20F5AA1A002F9253 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C74E596C20F5AA1A002F9253 /* Assets.xcassets */; };
-		C74E597020F5AA1A002F9253 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C74E596E20F5AA1A002F9253 /* LaunchScreen.storyboard */; };
 		C74E597320F5AA1A002F9253 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C74E597220F5AA1A002F9253 /* main.m */; };
 		C74E597D20F5AA1A002F9253 /* TestDiyKeyboardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C74E597C20F5AA1A002F9253 /* TestDiyKeyboardTests.m */; };
 		C74E598820F5AA1A002F9253 /* TestDiyKeyboardUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C74E598720F5AA1A002F9253 /* TestDiyKeyboardUITests.m */; };
-		C74E599720F5AF65002F9253 /* JYSafeKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = C74E599620F5AF65002F9253 /* JYSafeKeyboard.m */; };
+		C74E599720F5AF65002F9253 /* JYSafeKeyboardMain.m in Sources */ = {isa = PBXBuildFile; fileRef = C74E599620F5AF65002F9253 /* JYSafeKeyboardMain.m */; };
 		C74E599B20F5CF14002F9253 /* UITextField+SafeKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = C74E599A20F5CF14002F9253 /* UITextField+SafeKeyboard.m */; };
 		C74E599E20F5CF2B002F9253 /* UITextView+SafeKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = C74E599D20F5CF2B002F9253 /* UITextView+SafeKeyboard.m */; };
 		C74E59A320F607BC002F9253 /* JYAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = C74E59A220F607BC002F9253 /* JYAccessoryView.m */; };
 		C74E59A620F60815002F9253 /* UIButton+SafeKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = C74E59A520F60815002F9253 /* UIButton+SafeKeyboard.m */; };
 		C74E59A920F60ACD002F9253 /* JYNumberView.m in Sources */ = {isa = PBXBuildFile; fileRef = C74E59A720F60ACC002F9253 /* JYNumberView.m */; };
 		C76D058D20FC610400A1C9FB /* JYKeyBoardListener.m in Sources */ = {isa = PBXBuildFile; fileRef = C76D058C20FC610400A1C9FB /* JYKeyBoardListener.m */; };
+		C76D059420FCA56C00A1C9FB /* JYNumberView01.m in Sources */ = {isa = PBXBuildFile; fileRef = C76D059320FCA56C00A1C9FB /* JYNumberView01.m */; };
+		C7ADC8C320FCA97800D869F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C74E596920F5AA18002F9253 /* Main.storyboard */; };
+		C7ADC8C420FCA98400D869F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C74E596E20F5AA1A002F9253 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,13 +70,17 @@
 		C7367FD720F89E9700426622 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
 		C7367FD820F89E9700426622 /* up2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up2.png; sourceTree = "<group>"; };
 		C7367FDA20F89E9700426622 /* up1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up1.png; sourceTree = "<group>"; };
-		C7367FE120F8AD4300426622 /* JYKeyboardConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JYKeyboardConstant.h; sourceTree = "<group>"; };
 		C7367FE220F8B75C00426622 /* space.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = space.png; sourceTree = "<group>"; };
 		C7380E0C20F6E680000E2207 /* UIView+KeyboardExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+KeyboardExtension.h"; sourceTree = "<group>"; };
 		C7380E0D20F6E680000E2207 /* UIView+KeyboardExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+KeyboardExtension.m"; sourceTree = "<group>"; };
 		C7380E0F20F72573000E2207 /* JYLetterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYLetterView.m; sourceTree = "<group>"; };
 		C7380E1020F72573000E2207 /* JYLetterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYLetterView.h; sourceTree = "<group>"; };
 		C7380E1220F75ADB000E2207 /* test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
+		C739D88720FD87E200959C87 /* JYSafeKeyboardConfigure.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JYSafeKeyboardConfigure.h; sourceTree = "<group>"; };
+		C739D88820FD87E200959C87 /* JYSafeKeyboardConfigure.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JYSafeKeyboardConfigure.m; sourceTree = "<group>"; };
+		C739D88A20FDB48D00959C87 /* JYNumberView02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYNumberView02.h; sourceTree = "<group>"; };
+		C739D88B20FDB48D00959C87 /* JYNumberView02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYNumberView02.m; sourceTree = "<group>"; };
+		C739D88D20FDC2A500959C87 /* JYSafeKeyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JYSafeKeyboard.h; sourceTree = "<group>"; };
 		C74E596020F5AA18002F9253 /* TestDiyKeyboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDiyKeyboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C74E596320F5AA18002F9253 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C74E596420F5AA18002F9253 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -90,8 +97,8 @@
 		C74E598320F5AA1A002F9253 /* TestDiyKeyboardUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestDiyKeyboardUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C74E598720F5AA1A002F9253 /* TestDiyKeyboardUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestDiyKeyboardUITests.m; sourceTree = "<group>"; };
 		C74E598920F5AA1A002F9253 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C74E599520F5AF65002F9253 /* JYSafeKeyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JYSafeKeyboard.h; sourceTree = "<group>"; };
-		C74E599620F5AF65002F9253 /* JYSafeKeyboard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JYSafeKeyboard.m; sourceTree = "<group>"; };
+		C74E599520F5AF65002F9253 /* JYSafeKeyboardMain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JYSafeKeyboardMain.h; sourceTree = "<group>"; };
+		C74E599620F5AF65002F9253 /* JYSafeKeyboardMain.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JYSafeKeyboardMain.m; sourceTree = "<group>"; };
 		C74E599920F5CF14002F9253 /* UITextField+SafeKeyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextField+SafeKeyboard.h"; sourceTree = "<group>"; };
 		C74E599A20F5CF14002F9253 /* UITextField+SafeKeyboard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextField+SafeKeyboard.m"; sourceTree = "<group>"; };
 		C74E599C20F5CF2B002F9253 /* UITextView+SafeKeyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextView+SafeKeyboard.h"; sourceTree = "<group>"; };
@@ -104,6 +111,8 @@
 		C74E59A820F60ACC002F9253 /* JYNumberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYNumberView.h; sourceTree = "<group>"; };
 		C76D058B20FC610400A1C9FB /* JYKeyBoardListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYKeyBoardListener.h; sourceTree = "<group>"; };
 		C76D058C20FC610400A1C9FB /* JYKeyBoardListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYKeyBoardListener.m; sourceTree = "<group>"; };
+		C76D059220FCA56C00A1C9FB /* JYNumberView01.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYNumberView01.h; sourceTree = "<group>"; };
+		C76D059320FCA56C00A1C9FB /* JYNumberView01.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYNumberView01.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +151,10 @@
 				C74E59A220F607BC002F9253 /* JYAccessoryView.m */,
 				C74E59A820F60ACC002F9253 /* JYNumberView.h */,
 				C74E59A720F60ACC002F9253 /* JYNumberView.m */,
+				C76D059220FCA56C00A1C9FB /* JYNumberView01.h */,
+				C76D059320FCA56C00A1C9FB /* JYNumberView01.m */,
+				C739D88A20FDB48D00959C87 /* JYNumberView02.h */,
+				C739D88B20FDB48D00959C87 /* JYNumberView02.m */,
 				C7380E1020F72573000E2207 /* JYLetterView.h */,
 				C7380E0F20F72573000E2207 /* JYLetterView.m */,
 				C7367FC720F847D100426622 /* JYTextField.h */,
@@ -168,11 +181,14 @@
 		C7367FCD20F84D6000426622 /* KeyboardCommon */ = {
 			isa = PBXGroup;
 			children = (
-				C74E599520F5AF65002F9253 /* JYSafeKeyboard.h */,
-				C74E599620F5AF65002F9253 /* JYSafeKeyboard.m */,
+				C7367FCA20F84BE200426622 /* JYSafeKeyboardManager.h */,
+				C7367FCB20F84BE200426622 /* JYSafeKeyboardManager.m */,
+				C74E599520F5AF65002F9253 /* JYSafeKeyboardMain.h */,
+				C74E599620F5AF65002F9253 /* JYSafeKeyboardMain.m */,
 				C7367FC420F83BB000426622 /* JYWebviewKeyboardManager.h */,
 				C7367FC520F83BB000426622 /* JYWebviewKeyboardManager.m */,
-				C7367FE120F8AD4300426622 /* JYKeyboardConstant.h */,
+				C739D88720FD87E200959C87 /* JYSafeKeyboardConfigure.h */,
+				C739D88820FD87E200959C87 /* JYSafeKeyboardConfigure.m */,
 			);
 			path = KeyboardCommon;
 			sourceTree = "<group>";
@@ -238,8 +254,7 @@
 		C74E599820F5C8E7002F9253 /* KeyBoard */ = {
 			isa = PBXGroup;
 			children = (
-				C7367FCA20F84BE200426622 /* JYSafeKeyboardManager.h */,
-				C7367FCB20F84BE200426622 /* JYSafeKeyboardManager.m */,
+				C739D88D20FDC2A500959C87 /* JYSafeKeyboard.h */,
 				C7367FCD20F84D6000426622 /* KeyboardCommon */,
 				C7367FC320F83B7B00426622 /* KeyboardCatogray */,
 				C7367FC220F83B6000426622 /* KeyboardTypeViews */,
@@ -370,12 +385,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7ADC8C420FCA98400D869F0 /* LaunchScreen.storyboard in Resources */,
+				C7ADC8C320FCA97800D869F0 /* Main.storyboard in Resources */,
 				C7367FE320F8B75C00426622 /* space.png in Resources */,
 				C7367FDB20F89E9700426622 /* delete.png in Resources */,
 				C7367FDC20F89E9700426622 /* up2.png in Resources */,
-				C74E597020F5AA1A002F9253 /* LaunchScreen.storyboard in Resources */,
 				C74E596D20F5AA1A002F9253 /* Assets.xcassets in Resources */,
-				C74E596B20F5AA18002F9253 /* Main.storyboard in Resources */,
 				C7367FDE20F89E9700426622 /* up1.png in Resources */,
 				C7380E1320F75ADB000E2207 /* test.html in Resources */,
 			);
@@ -407,13 +422,16 @@
 				C7380E1120F72573000E2207 /* JYLetterView.m in Sources */,
 				C74E59A920F60ACD002F9253 /* JYNumberView.m in Sources */,
 				C74E596820F5AA18002F9253 /* ViewController.m in Sources */,
+				C739D88C20FDB48D00959C87 /* JYNumberView02.m in Sources */,
 				C7367FC920F847D100426622 /* JYTextField.m in Sources */,
 				C7367FD620F8508B00426622 /* JYWebviewViewController.m in Sources */,
 				C74E599E20F5CF2B002F9253 /* UITextView+SafeKeyboard.m in Sources */,
 				C7367FD020F8505800426622 /* JYAppJSInteraction.m in Sources */,
 				C76D058D20FC610400A1C9FB /* JYKeyBoardListener.m in Sources */,
+				C739D88920FD87E200959C87 /* JYSafeKeyboardConfigure.m in Sources */,
 				C7367FCC20F84BE200426622 /* JYSafeKeyboardManager.m in Sources */,
-				C74E599720F5AF65002F9253 /* JYSafeKeyboard.m in Sources */,
+				C74E599720F5AF65002F9253 /* JYSafeKeyboardMain.m in Sources */,
+				C76D059420FCA56C00A1C9FB /* JYNumberView01.m in Sources */,
 				C74E599B20F5CF14002F9253 /* UITextField+SafeKeyboard.m in Sources */,
 				C74E597320F5AA1A002F9253 /* main.m in Sources */,
 				C74E596520F5AA18002F9253 /* AppDelegate.m in Sources */,

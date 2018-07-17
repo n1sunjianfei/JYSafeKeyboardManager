@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "JYKeyBoardListener.h"
+#import "JYSafeKeyboard.h"
 @interface AppDelegate ()
 
 @end
@@ -19,6 +20,7 @@
     // Override point for customization after application launch.
     //开启键盘弹出监听
     [JYKeyBoardListener useJYKeyboardListener];
+//    [[JYSafeKeyboardConfigure defaultManager] setKeyboardBackgroundColor:[UIColor redColor]];
     return YES;
 }
 

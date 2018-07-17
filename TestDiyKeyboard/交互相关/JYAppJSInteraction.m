@@ -7,7 +7,7 @@
 //
 
 #import "JYAppJSInteraction.h"
-#import "JYSafeKeyboardManager.h"
+#import "JYSafeKeyboard.h"
 static NSString * const methodNameLivenessDetectorFinished = @"livenessDetectorFinished";
 
 @implementation JYAppJSInteractionModel
@@ -126,6 +126,7 @@ static NSString * const methodNameLivenessDetectorFinished = @"livenessDetectorF
     NSDictionary *dic = [self parseDictWithJsonString:param];
     NSDictionary *frameDic = dic[@"frame"];
     NSLog(@"%@",dic);
+    [JYSafeKeyboardConfigure defaultManager].storeValue = [dic[@"store"] floatValue];
     [JYSafeKeyboardManager useWebViewSafeKeyboardWithType:[dic[@"type"] integerValue] inputId:dic[@"inputid"] webView:self.webview frameDic:frameDic];
 }
 

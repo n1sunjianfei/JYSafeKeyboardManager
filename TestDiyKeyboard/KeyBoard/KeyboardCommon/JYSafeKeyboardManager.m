@@ -23,7 +23,7 @@
     
 }
 + (void)useSafeKeyboard:(id)inputField type:(SafeKeyboardType)keyboardType{
-    [JYSafeKeyboard useJYSafeKeyboard:inputField type:keyboardType];
+    [JYSafeKeyboardMain useJYSafeKeyboard:inputField type:keyboardType];
 }
 
 @end

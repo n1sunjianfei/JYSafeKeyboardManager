@@ -8,7 +8,7 @@
 
 #import "JYNumberView.h"
 #import "UIButton+SafeKeyboard.h"
-#import "JYKeyboardConstant.h"
+#import "JYSafeKeyboardConfigure.h"
 #import "UIView+KeyboardExtension.h"
 @implementation JYNumberView
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -28,7 +28,7 @@
     CGFloat width = CGRectGetWidth(self.bounds);
     CGFloat height = CGRectGetHeight(self.bounds);
     UIView *numberView = [[UIView alloc]initWithFrame:self.bounds];
-    numberView.backgroundColor = Keyboard_BackgroundColor;
+    numberView.backgroundColor = [JYSafeKeyboardConfigure defaultManager].keyboardBackgroundColor;
     [self addSubview:numberView];
     CGFloat margin = 1;
     int lines = 4;
@@ -46,7 +46,7 @@
         switch (i) {
             case 9:{
                 UIButton *button = [UIButton createButton:frame title:@"ABC" tag:i image:nil selector:@selector(click:)];
-                button.backgroundColor = Keyboard_FunctionItem_BackgroundColor;
+                button.backgroundColor = [JYSafeKeyboardConfigure defaultManager].functionItemBackgroundColor;
                 [numberView addSubview:button];
             }
                 break;
@@ -55,7 +55,7 @@
                 CGFloat imageHeight = button.keyboard_h*2/3;
                 
                 [button setImageEdgeInsets:UIEdgeInsetsMake((button.keyboard_h-imageHeight)/2, (button.keyboard_w-imageHeight)/2, (button.keyboard_h-imageHeight)/2, (button.keyboard_w-imageHeight)/2)];
-                [button setBackgroundColor:Keyboard_FunctionItem_BackgroundColor];
+                [button setBackgroundColor:[JYSafeKeyboardConfigure defaultManager].functionItemBackgroundColor];
                 //清楚按钮
                 [numberView addSubview:button];
             }
@@ -67,7 +67,7 @@
                 } while ([tmpArray containsObject:[NSNumber numberWithInt:titleInt]]);
                 [tmpArray addObject:[NSNumber numberWithInt:titleInt]];
                 UIButton *button = [UIButton createButton:frame title:[NSString stringWithFormat:@"%d",titleInt] tag:i image:nil selector:@selector(click:)];
-                [button setBackgroundColor:Keyboard_InputItem_BackgroundColor];
+                [button setBackgroundColor:[JYSafeKeyboardConfigure defaultManager].inputItemBackgroundColor];
                 [numberView addSubview:button];
             }
                 break;

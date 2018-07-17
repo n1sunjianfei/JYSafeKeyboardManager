@@ -8,10 +8,7 @@
 
 #import "ViewController.h"
 #import "JYWebviewViewController.h"
-//#import "JYSafeKeyboard.h"
-//
-//#import "JYWebviewKeyboardManager.h"
-#import "JYSafeKeyboardManager.h"
+#import "JYSafeKeyboard.h"
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *pwdTextField;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
@@ -25,10 +22,10 @@
     // Do any additional setup after loading the view, typically from a nib.
 
     self.title = @"安全键盘";
-    [JYSafeKeyboardManager useSafeKeyboard:self.pwdTextField type:SafeKeyboard_Type_Default];
+    [JYSafeKeyboardManager useSafeKeyboard:self.pwdTextField type:SafeKeyboard_Type_Number01];
     [JYSafeKeyboardManager useSafeKeyboard:self.textView type:SafeKeyboard_Type_Number];
-
 }
+
 - (IBAction)jumpWeb:(id)sender {
     [self.view endEditing:YES];
     JYWebviewViewController *webVC = [[JYWebviewViewController alloc]init];

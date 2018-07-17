@@ -7,7 +7,7 @@
 //
 
 #import "UIButton+SafeKeyboard.h"
-#import "JYKeyboardConstant.h"
+#import "JYSafeKeyboardConfigure.h"
 @implementation UIButton (SafeKeyboard)
 #pragma mark - 创建按钮
 + (UIButton*)createButton:(CGRect)frame title:(NSString*)title tag:(NSInteger)tag image:(UIImage*)image selector:(SEL)seletcor{
@@ -15,7 +15,8 @@
     button.frame = frame;
     button.tag = tag;
     [button setBackgroundColor:[UIColor whiteColor]];
-    [button setTitleColor:Keyboard_InputCharacter_BackgroundColor forState:UIControlStateNormal];
+    [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
+    [button setTitleColor:[JYSafeKeyboardConfigure defaultManager].inputCharacterTextColor forState:UIControlStateNormal];
     [button setImage:image forState:UIControlStateNormal];
     [button setTitle:title forState:UIControlStateNormal];
     [button addTarget:nil action:seletcor forControlEvents:UIControlEventTouchUpInside];

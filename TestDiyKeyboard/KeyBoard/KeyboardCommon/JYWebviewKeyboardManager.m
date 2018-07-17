@@ -7,7 +7,7 @@
 //
 
 #import "JYWebviewKeyboardManager.h"
-#import "JYSafeKeyboard.h"
+#import "JYSafeKeyboardMain.h"
 #import "UITextField+SafeKeyboard.h"
 #import "JYTextField.h"
 #import "UIView+KeyboardExtension.h"
@@ -52,7 +52,7 @@ static JYWebviewKeyboardManager *globalManager;
         globalManager.tmpTextField.hidden = YES;
 //        globalManager.tmpTextField.frame =
         CGRectMake(10.0/980*375, 500.1875/980*375, 608.15625/980*375, 86.0/980*375);
-        [JYSafeKeyboard useJYSafeKeyboard:globalManager.tmpTextField type:SafeKeyboard_Type_Default];
+        [JYSafeKeyboardMain useJYSafeKeyboard:globalManager.tmpTextField type:SafeKeyboard_Type_Default];
     });
     
     return globalManager;

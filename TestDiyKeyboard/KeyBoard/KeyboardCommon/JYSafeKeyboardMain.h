@@ -10,11 +10,13 @@
 #import "JYWebviewKeyboardManager.h"
 
 typedef enum {
-    SafeKeyboard_Type_Default=0,
-    SafeKeyboard_Type_Number
+    SafeKeyboard_Type_Default=0,//字符
+    SafeKeyboard_Type_Number,//常用数字键盘
+    SafeKeyboard_Type_Number01,//定制数字键盘01
+    SafeKeyboard_Type_Number02//定制数字键盘02
 }SafeKeyboardType;
 
-@interface JYSafeKeyboard : NSObject
+@interface JYSafeKeyboardMain : NSObject
 
 /**
  调用输入框

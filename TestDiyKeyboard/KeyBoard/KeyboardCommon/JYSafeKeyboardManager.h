@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "JYSafeKeyboard.h"
+#import "JYSafeKeyboardMain.h"
 #import "JYWebviewKeyboardManager.h"
-#import "JYKeyBoardListener.h"
+
 @interface JYSafeKeyboardManager : NSObject
 + (void)useWebViewSafeKeyboardWithType:(NSInteger)keyboardType inputId:(NSString*)inputId webView:(UIWebView*)webview frameDic:(NSDictionary*)frameDic;
 + (void)useSafeKeyboard:(id)inputField type:(SafeKeyboardType)keyboardType;
+
 @end

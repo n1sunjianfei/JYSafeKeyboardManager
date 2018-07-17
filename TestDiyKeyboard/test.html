@@ -10,27 +10,26 @@
 
     </head>
     <body style="font-size:12px;line-height:40px">
-        <input type="button" value="shuruwenzi">
 
         <div style="margin-top: 10px">
             <h1>Objective-C和JavaScript交互-安全键盘</h1>
-            <input style="font-size:12px" type="button" value="调起字母键盘" onclick="showKeyBoard01('inputid01')">
+            <input style="font-size:12px" id = "storeId" type="text" value="调起仓库键盘" onclick="storeKeyBoard('storeId')">
         </div>
-        
-        <div >
-            <input style="font-size:12px" type="button" value="调起数字键盘" onclick="showKeyBoard02('inputid01')">
+<!--        -->
+<!--        <div >-->
+<!--            <input style="font-size:12px" type="button" value="调起数字键盘" onclick="showKeyBoard02('inputid01','1')">-->
+<!--        </div>-->
+        <div>
+            <input style="font-size:12px" id = "inputid01" type="text" value="字母键盘" onclick="showKeyBoard02('inputid01','0')">
         </div>
         <div>
-            <input style="font-size:12px" id = "inputid01" type="text" value="shuruwenzi" onclick="showKeyBoard02('inputid01')">
+            <input style="font-size:12px" id = "inputid02" type="text" value="数字键盘" onclick="showKeyBoard02('inputid02','1')">
         </div>
         <div>
-            <input style="font-size:12px" id = "inputid02" type="text" value="shuruwenzi" onclick="showKeyBoard02('inputid02')">
+            <input style="font-size:12px" id = "inputid03" type="text" value="数字键盘01" onclick="showKeyBoard02('inputid03','2')">
         </div>
         <div>
-            <input style="font-size:12px" id = "inputid03" type="text" value="shuruwenzi" onclick="showKeyBoard02('inputid03')">
-        </div>
-        <div>
-            <input style="font-size:12px" id = "inputid04" type="text" value="shuruwenzi" onclick="showKeyBoard02('inputid04')">
+            <input style="font-size:12px" id = "inputid04" type="text" value="数字键盘02" onclick="showKeyBoard02('inputid04','3')">
         </div>
         <div>
             <input style="font-size:12px" id = "inputid05" type="text" value="shuruwenzi" onclick="showKeyBoard02('inputid05')">
@@ -52,13 +51,16 @@
         </div>
 
         <script>
-            var showKeyBoard01 = function(e) {
-                var shareInfo = JSON.stringify({"type": "0", "inputid": e});
+            var showKeyBoard01 = function(inputid) {
+                var shareInfo = JSON.stringify({"type": "0", "inputid": inputid});
                 AppJS.showKeyBoard(shareInfo);
             }
-
-            var showKeyBoard02 = function(e) {
-                var input = document.getElementById(e); // 根据ID取得元素对象
+            var storeKeyBoard = function(inputid) {
+                var shareInfo = JSON.stringify({"type": "3", "inputid": inputid,"store":"5000"});
+                AppJS.showKeyBoard(shareInfo);
+            }
+            var showKeyBoard02 = function(inputid,type) {
+                var input = document.getElementById(inputid); // 根据ID取得元素对象
                 var sizeObj = input.getBoundingClientRect(); // 取得元素距离窗口的绝对位置
                 // 窗口的滚动偏移（垂直、水平）
                 var bodyOffset = {top: document.body.scrollTop, left: document.body.scrollLeft};
@@ -69,16 +71,13 @@
                 var widthScreen = window.screen.width;
                 var widthScroll = document.body.scrollWidth;
                 var ratio = window.devicePixelRatio;
-                var shareInfo = JSON.stringify({"type": "1", "inputid": e,"frame":{"top":inputOffsetTop,"left":inputOffsetLeft,"width":sizeObj.width,"height":sizeObj.height,"screen_ratio":widthScroll/widthScreen,"ratio":ratio,"widthScreen":widthScreen,"widthScroll":widthScroll}});
+                var shareInfo = JSON.stringify({"type": type, "inputid": inputid,"frame":{"top":inputOffsetTop,"left":inputOffsetLeft,"width":sizeObj.width,"height":sizeObj.height,"screen_ratio":widthScroll/widthScreen,"ratio":ratio,"widthScreen":widthScreen,"widthScroll":widthScroll}});
                 AppJS.showKeyBoard(shareInfo);
             }
-<!--        var picCallback = function(photos) {-->
-<!--            alert(photos);-->
-<!--        }-->
-<!--        -->
-<!--        var showKeyBoard01Callback = function(){-->
-<!--            alert('success');-->
-<!--        }-->
+
+        var showKeyBoard01Callback = function(){
+            alert('success');
+        }
         </script>
     </body>
 </html>
