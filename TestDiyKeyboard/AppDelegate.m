@@ -21,6 +21,8 @@
     //开启键盘弹出监听
     [JYKeyBoardListener useJYKeyboardListener];
 //    [[JYSafeKeyboardConfigure defaultManager] setKeyboardBackgroundColor:[UIColor redColor]];
+    [[JYSafeKeyboardConfigure defaultManager] setIsUsedInputAccessView:NO];
+
     return YES;
 }
 

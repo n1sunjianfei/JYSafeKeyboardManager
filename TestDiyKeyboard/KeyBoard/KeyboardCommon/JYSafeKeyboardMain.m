@@ -42,7 +42,10 @@ static JYSafeKeyboardMain *globalKeyBoard;
         UITextField *realInputField = (UITextField*)inputField;
         realInputField.isUseSafeKeyboard = @1;
         realInputField.keyboardType = [NSNumber numberWithInteger:keyboardType];
-        realInputField.inputAccessoryView = [JYSafeKeyboardMain sharedKeyBoard].inputAccessoryView ;
+        if ([JYSafeKeyboardConfigure defaultManager].isUsedInputAccessView) {
+           realInputField.inputAccessoryView = [JYSafeKeyboardMain sharedKeyBoard].inputAccessoryView ;
+        }
+        
         realInputField.inputView = [JYSafeKeyboardMain sharedKeyBoard].keyBoardView;
         [realInputField addTarget:[JYSafeKeyboardMain sharedKeyBoard] action:@selector(begin:) forControlEvents:UIControlEventEditingDidBegin];
         
@@ -50,7 +53,9 @@ static JYSafeKeyboardMain *globalKeyBoard;
         UITextView *realInputField = (UITextView*)inputField;
         realInputField.isUseSafeKeyboard = @1;
         realInputField.keyboardType = [NSNumber numberWithInteger:keyboardType];
-        realInputField.inputAccessoryView = [JYSafeKeyboardMain sharedKeyBoard].inputAccessoryView;
+        if ([JYSafeKeyboardConfigure defaultManager].isUsedInputAccessView) {
+            realInputField.inputAccessoryView = [JYSafeKeyboardMain sharedKeyBoard].inputAccessoryView ;
+        }
         realInputField.inputView = [JYSafeKeyboardMain sharedKeyBoard].keyBoardView;
         [realInputField addNotification];
         
@@ -155,7 +160,7 @@ static JYSafeKeyboardMain *globalKeyBoard;
 
 - (UIView*)keyBoardView{
     if (!_keyBoardView) {
-        _keyBoardView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds), 200)];
+        _keyBoardView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds), 210)];
     }
     return _keyBoardView;
 }
@@ -205,45 +210,45 @@ static JYSafeKeyboardMain *globalKeyBoard;
     [self.keyBoardView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     switch (keyBoardType) {
         case SafeKeyboard_Type_Default:{
-            NSDictionary *views = NSDictionaryOfVariableBindings(_letterView);
+            NSDictionary *views = NSDictionaryOfVariableBindings(_letterView,_keyBoardView);
             [self.keyBoardView addSubview:self.letterView];
             [self.letterView setTranslatesAutoresizingMaskIntoConstraints:NO];
             [self.keyBoardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_letterView]|" options:0 metrics:nil views:views]];
             //view1高度为40，距离底端距离为0
-            [self.keyBoardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_letterView(==200)]" options:0 metrics:nil views:views]];
+            [self.keyBoardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_letterView(==_keyBoardView)]" options:0 metrics:nil views:views]];
         }
             break;
         case SafeKeyboard_Type_Number:{
 
             [self.keyBoardView addSubview:self.numberView];
             [self.numberView setTranslatesAutoresizingMaskIntoConstraints:NO];
-            NSDictionary *views = NSDictionaryOfVariableBindings(_numberView);
+            NSDictionary *views = NSDictionaryOfVariableBindings(_numberView,_keyBoardView);
             //view1距离superview两端距离都为0
             [self.keyBoardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_numberView]|" options:0 metrics:nil views:views]];
             //view1高度为40，距离底端距离为0
-            [self.keyBoardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_numberView(==200)]" options:0 metrics:nil views:views]];
+            [self.keyBoardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_numberView(==_keyBoardView)]" options:0 metrics:nil views:views]];
         }
             break;
         case SafeKeyboard_Type_Number01:{
             
             [self.keyBoardView addSubview:self.numberView01];
             [self.numberView01 setTranslatesAutoresizingMaskIntoConstraints:NO];
-            NSDictionary *views = NSDictionaryOfVariableBindings(_numberView01);
+            NSDictionary *views = NSDictionaryOfVariableBindings(_numberView01,_keyBoardView);
             //view1距离superview两端距离都为0
             [self.keyBoardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_numberView01]|" options:0 metrics:nil views:views]];
             //view1高度为40，距离底端距离为0
-            [self.keyBoardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_numberView01(==200)]" options:0 metrics:nil views:views]];
+            [self.keyBoardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_numberView01(==_keyBoardView)]" options:0 metrics:nil views:views]];
         }
             break;
         case SafeKeyboard_Type_Number02:{
             
             [self.keyBoardView addSubview:self.numberView02];
             [self.numberView02 setTranslatesAutoresizingMaskIntoConstraints:NO];
-            NSDictionary *views = NSDictionaryOfVariableBindings(_numberView02);
+            NSDictionary *views = NSDictionaryOfVariableBindings(_numberView02,_keyBoardView);
             //view1距离superview两端距离都为0
             [self.keyBoardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_numberView02]|" options:0 metrics:nil views:views]];
             //view1高度为40，距离底端距离为0
-            [self.keyBoardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_numberView02(==200)]" options:0 metrics:nil views:views]];
+            [self.keyBoardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_numberView02(==_keyBoardView)]" options:0 metrics:nil views:views]];
         }
             break;
         default:

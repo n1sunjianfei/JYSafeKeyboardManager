@@ -22,8 +22,15 @@
 @property(nonatomic,strong) UIColor *keyboardBackgroundColor;
 //空格文字颜色
 @property(nonatomic,strong) UIColor *whiteSpaceTextColor;
+//InputAccessView背景颜色
+@property(nonatomic,strong) UIColor *inputAccessViewBgColor;
+//InputAccessView文字颜色
+@property(nonatomic,strong) UIColor *inputAccessViewTextColor;
+
 //仓库数量
 @property(nonatomic,assign) float storeValue;
+//是否使用InputAccessView
+@property(nonatomic,assign) BOOL isUsedInputAccessView;
 
 + (instancetype)defaultManager;
 

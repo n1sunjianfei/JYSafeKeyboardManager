@@ -133,6 +133,4 @@ static NSString * const methodNameLivenessDetectorFinished = @"livenessDetectorF
 - (void)dealloc {
 }
 
-
-
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "JYAccessoryView.h"
+#import "JYSafeKeyboardConfigure.h"
 @implementation JYAccessoryView
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
@@ -23,7 +24,10 @@
 }
 - (void)setupUI{
     UIToolbar *toolbar = [[UIToolbar alloc]initWithFrame:self.bounds];
+//    toolbar.backgroundColor = [JYSafeKeyboardConfigure defaultManager].inputAccessViewBgColor;
+    toolbar.barTintColor = [JYSafeKeyboardConfigure defaultManager].inputAccessViewBgColor;
     UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(clickFinished:)];
+    [item setTintColor:[JYSafeKeyboardConfigure defaultManager].inputAccessViewTextColor];
     toolbar.items = @[item];
     [self addSubview:toolbar];
 }

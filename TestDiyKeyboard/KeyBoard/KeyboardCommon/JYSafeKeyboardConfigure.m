@@ -18,6 +18,10 @@
 #define Keyboard_BackgroundColor Keyboard_Color(24,26,28,1.0)
 //空格文字颜色
 #define Keyboard_WhiteSpace_TextColor Keyboard_Color(51, 161,251, 1.0)
+//InputAccessView背景颜色
+#define Keyboard_InputAccessView_BackgroundColor Keyboard_Color(24,26,28,1.0)
+//InputAccessView文字颜色
+#define Keyboard_InputAccessView_TextColor Keyboard_Color(51, 161,251, 1.0)
 
 static JYSafeKeyboardConfigure *globalConfigure;
 
@@ -32,6 +36,7 @@ static JYSafeKeyboardConfigure *globalConfigure;
     dispatch_once(&onceToken, ^{
         globalConfigure = [[self alloc] init];
         globalConfigure.storeValue = 0.0;
+        globalConfigure.isUsedInputAccessView = YES;
     });
     
     return globalConfigure;
@@ -50,5 +55,11 @@ static JYSafeKeyboardConfigure *globalConfigure;
 }
 - (UIColor*)whiteSpaceTextColor{
     return _whiteSpaceTextColor?:Keyboard_WhiteSpace_TextColor;
+}
+- (UIColor*)inputAccessViewBgColor{
+    return _inputAccessViewBgColor?:Keyboard_InputAccessView_BackgroundColor;
+}
+- (UIColor*)inputAccessViewTextColor{
+    return _inputAccessViewTextColor?:Keyboard_InputAccessView_TextColor;
 }
 @end
