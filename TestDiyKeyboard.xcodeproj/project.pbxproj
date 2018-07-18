@@ -181,10 +181,10 @@
 		C7367FCD20F84D6000426622 /* KeyboardCommon */ = {
 			isa = PBXGroup;
 			children = (
-				C7367FCA20F84BE200426622 /* JYSafeKeyboardManager.h */,
-				C7367FCB20F84BE200426622 /* JYSafeKeyboardManager.m */,
 				C74E599520F5AF65002F9253 /* JYSafeKeyboardMain.h */,
 				C74E599620F5AF65002F9253 /* JYSafeKeyboardMain.m */,
+				C7367FCA20F84BE200426622 /* JYSafeKeyboardManager.h */,
+				C7367FCB20F84BE200426622 /* JYSafeKeyboardManager.m */,
 				C7367FC420F83BB000426622 /* JYWebviewKeyboardManager.h */,
 				C7367FC520F83BB000426622 /* JYWebviewKeyboardManager.m */,
 				C739D88720FD87E200959C87 /* JYSafeKeyboardConfigure.h */,

@@ -22,7 +22,7 @@
     [JYKeyBoardListener useJYKeyboardListener];
 //    [[JYSafeKeyboardConfigure defaultManager] setKeyboardBackgroundColor:[UIColor redColor]];
     [[JYSafeKeyboardConfigure defaultManager] setIsUsedInputAccessView:NO];
-
+   
     return YES;
 }
 
