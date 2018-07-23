@@ -14,12 +14,12 @@
 
 @implementation UITextField (SafeKeyboard)
 
--(void)setKeyboardType:(NSNumber*)keyboardType{
+-(void)setSafeKeyboardType:(NSNumber *)safeKeyboardType{
     
-    objc_setAssociatedObject(self, KeyboardType_Key_textField, keyboardType, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, KeyboardType_Key_textField, safeKeyboardType, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
--(NSNumber*)keyboardType{
+-(NSNumber*)safeKeyboardType{
     
     return objc_getAssociatedObject(self, KeyboardType_Key_textField);
 }

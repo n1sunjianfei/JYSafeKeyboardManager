@@ -37,9 +37,9 @@
 - (void)stopEditing:(NSNotification*)notify{
     self.isBeginEditing = [NSNumber numberWithBool:NO];
 }
--(void)setKeyboardType:(NSNumber*)keyboardType{
+-(void)setSafeKeyboardType:(NSNumber *)safeKeyboardType{
     
-    objc_setAssociatedObject(self, KeyboardType_Key_inputView, keyboardType, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, KeyboardType_Key_inputView, safeKeyboardType, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 -(NSNumber*)isBeginEditing{
@@ -51,7 +51,7 @@
     objc_setAssociatedObject(self, IsBeginEditing_Key_inputView, isBeginEditing, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
--(NSNumber*)keyboardType{
+-(NSNumber*)safeKeyboardType{
     
     return objc_getAssociatedObject(self, KeyboardType_Key_inputView);
 }

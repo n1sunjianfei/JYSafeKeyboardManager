@@ -41,7 +41,7 @@ static JYSafeKeyboardMain *globalKeyBoard;
     if ([inputField isKindOfClass:[UITextField class]]) {
         UITextField *realInputField = (UITextField*)inputField;
         realInputField.isUseSafeKeyboard = @1;
-        realInputField.keyboardType = [NSNumber numberWithInteger:keyboardType];
+        realInputField.safeKeyboardType = [NSNumber numberWithInteger:keyboardType];
         if ([JYSafeKeyboardConfigure defaultManager].isUsedInputAccessView) {
            realInputField.inputAccessoryView = [JYSafeKeyboardMain sharedKeyBoard].inputAccessoryView ;
         }
@@ -52,7 +52,7 @@ static JYSafeKeyboardMain *globalKeyBoard;
     }else if([inputField isKindOfClass:[UITextView class]]){
         UITextView *realInputField = (UITextView*)inputField;
         realInputField.isUseSafeKeyboard = @1;
-        realInputField.keyboardType = [NSNumber numberWithInteger:keyboardType];
+        realInputField.safeKeyboardType = [NSNumber numberWithInteger:keyboardType];
         if ([JYSafeKeyboardConfigure defaultManager].isUsedInputAccessView) {
             realInputField.inputAccessoryView = [JYSafeKeyboardMain sharedKeyBoard].inputAccessoryView ;
         }
@@ -88,7 +88,7 @@ static JYSafeKeyboardMain *globalKeyBoard;
         UITextField *realInputField = (UITextField*)firstResponder;
         if ([realInputField.isUseSafeKeyboard boolValue]) {
             if (self.isNewResponder) {
-                [[JYSafeKeyboardMain sharedKeyBoard] loadKeyboardView:[[JYSafeKeyboardMain sharedKeyBoard] changeToKeyboardType:realInputField.keyboardType]];
+                [[JYSafeKeyboardMain sharedKeyBoard] loadKeyboardView:[[JYSafeKeyboardMain sharedKeyBoard] changeToKeyboardType:realInputField.safeKeyboardType]];
                 self.isNewResponder = NO;
 
             }
@@ -101,7 +101,7 @@ static JYSafeKeyboardMain *globalKeyBoard;
         UITextView *realInputField = (UITextView*)firstResponder;
         if ([realInputField.isUseSafeKeyboard boolValue]) {
             if (![realInputField.isBeginEditing boolValue]) {
-                [[JYSafeKeyboardMain sharedKeyBoard] loadKeyboardView:[[JYSafeKeyboardMain sharedKeyBoard] changeToKeyboardType:realInputField.keyboardType]];
+                [[JYSafeKeyboardMain sharedKeyBoard] loadKeyboardView:[[JYSafeKeyboardMain sharedKeyBoard] changeToKeyboardType:realInputField.safeKeyboardType]];
             }
         }else{
             NSLog(@"未开启安全键盘");

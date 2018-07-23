@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 //#import "JYSafeKeyboard.h"
 @interface UITextView (SafeKeyboard)
-@property(nonatomic,strong) NSNumber *keyboardType;
+@property(nonatomic,strong) NSNumber *safeKeyboardType;
 @property(nonatomic,strong) NSNumber *isUseSafeKeyboard;
 @property(nonatomic,strong) NSNumber *isBeginEditing;//用于处理键盘弹出时，区分是首次弹出还是横屏切换或者前后台切换弹出
 

@@ -19,9 +19,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     //开启键盘弹出监听
-    [JYKeyBoardListener useJYKeyboardListener];
+//    [JYKeyBoardListener useJYKeyboardListener];
 //    [[JYSafeKeyboardConfigure defaultManager] setKeyboardBackgroundColor:[UIColor redColor]];
-    [[JYSafeKeyboardConfigure defaultManager] setIsUsedInputAccessView:NO];
+    [[JYSafeKeyboardConfigure defaultManager] setIsUsedInputAccessView:YES];
    
     return YES;
 }

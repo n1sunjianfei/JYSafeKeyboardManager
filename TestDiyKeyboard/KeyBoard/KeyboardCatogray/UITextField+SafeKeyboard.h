@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface UITextField (SafeKeyboard)
-@property(nonatomic,strong) NSNumber *keyboardType;
+@property(nonatomic,strong) NSNumber *safeKeyboardType;
 @property(nonatomic,strong) NSNumber *isUseSafeKeyboard;
 /**
  *  光标选择的范围

@@ -127,10 +127,12 @@ static NSString * const methodNameLivenessDetectorFinished = @"livenessDetectorF
     NSDictionary *frameDic = dic[@"frame"];
     NSLog(@"%@",dic);
     [JYSafeKeyboardConfigure defaultManager].storeValue = [dic[@"store"] floatValue];
+    
     [JYSafeKeyboardManager useWebViewSafeKeyboardWithType:[dic[@"type"] integerValue] inputId:dic[@"inputid"] webView:self.webview frameDic:frameDic];
 }
 
 - (void)dealloc {
+    
 }
 
 @end

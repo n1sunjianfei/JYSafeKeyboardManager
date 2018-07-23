@@ -23,7 +23,7 @@ static JYWebviewKeyboardManager *globalManager;
 @implementation JYWebviewKeyboardManager
 
 + (void)showKeyboardWithType:(NSInteger)keyboardType inputId:(NSString*)inputId webView:(UIWebView*)webview frame:(CGRect)textFieldFrame{
-    [JYWebviewKeyboardManager shareWebViewManager].tmpWebView = webview;
+//    [JYWebviewKeyboardManager shareWebViewManager].tmpWebView = webview;
     [JYWebviewKeyboardManager shareWebViewManager].inputId = inputId;
     [JYWebviewKeyboardManager shareWebViewManager].tmpWebView = webview;
     
@@ -31,15 +31,13 @@ static JYWebviewKeyboardManager *globalManager;
 
     NSString *string = [webview stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.getElementById('%@').value;",inputId]];
     textField.text = string;
-    textField.keyboardType = [NSNumber numberWithInteger:keyboardType];
+    textField.safeKeyboardType = [NSNumber numberWithInteger:keyboardType];
     textField.inputId = inputId;
     textField.tmpWebView = webview;
     textField.frame = textFieldFrame;
 //    textField.keyboard_y -= webview.scrollView.contentOffset.y;
 //    [webview addSubview:textField];
     [webview.scrollView addSubview:textField];
-    
-    
     [textField becomeFirstResponder];
 }
 
