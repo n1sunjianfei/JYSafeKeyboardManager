@@ -7,13 +7,34 @@
 //
 
 #import "JYTextField.h"
-
+#import "JYSafeKeyboardConfigure.h"
 @implementation JYTextField
 
 - (void)setText:(NSString *)text{
     [super setText:text];
     if (self.tmpWebView&&self.inputId) {
-       [self.tmpWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.getElementById('%@').value = '%@'",self.inputId,text]];
+        
+        NSString *callBackName = [JYSafeKeyboardConfigure defaultManager].callBackFinishedName;
+        if (callBackName&&![callBackName isEqual:@""]) {
+            NSString *str = [NSString stringWithFormat:@"%@('{\"inputId\":\"%@\",\"value\":\"%@\"}')",callBackName, self.inputId, text];
+            if ([self.tmpWebView isKindOfClass:[WKWebView class]]) {
+                [self.tmpWebView evaluateJavaScript:str completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+                    
+                }];
+            }else if ([self.tmpWebView isKindOfClass:[UIWebView class]]){
+                [self.tmpWebView stringByEvaluatingJavaScriptFromString:str];
+
+            }
+            
+        }else{
+            if ([self.tmpWebView isKindOfClass:[WKWebView class]]) {
+                //WKWebview
+                [self.tmpWebView evaluateJavaScript:[NSString stringWithFormat:@"document.getElementById('%@').value = '%@'",self.inputId,text] completionHandler:nil];
+                
+            }else if ([self.tmpWebView isKindOfClass:[UIWebView class]]){
+                [self.tmpWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.getElementById('%@').value = '%@'",self.inputId,text]];
+            }
+        }
     }
 }
 - (BOOL)endEditing:(BOOL)force{

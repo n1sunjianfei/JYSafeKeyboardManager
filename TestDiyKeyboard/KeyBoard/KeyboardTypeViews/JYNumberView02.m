@@ -67,7 +67,8 @@
                 break;
         }
         
-        UIButton *button = [UIButton createButton:frame title:title tag:i image:nil selector:@selector(click:)];
+        UIButton *button = [UIButton createButton:frame title:title tag:i image:nil];
+         [button addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
         [button setBackgroundColor:[JYSafeKeyboardConfigure defaultManager].inputItemBackgroundColor];
         [numberView addSubview:button];
     }
@@ -98,7 +99,8 @@
                 break;
         }
         
-        UIButton *button = [UIButton createButton:frame title:title tag:i+12 image:image selector:@selector(click:)];
+        UIButton *button = [UIButton createButton:frame title:title tag:i+12 image:image];
+         [button addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
         [button setBackgroundColor:[JYSafeKeyboardConfigure defaultManager].inputItemBackgroundColor];
         if (i==2) {
             CGFloat imageHeight = button.keyboard_h*2/3;
@@ -125,9 +127,13 @@
             case 1://清空
                 title = @"清空";
                 break;
-            case 2://删除
-                image = [UIImage imageNamed:@"delete.png"];
-                
+            case 2:{//删除
+//                image = [UIImage imageNamed:@"delete.png"];
+                NSString *imageName = [NSString stringWithFormat:@"SafeKeyBoard.bundle/%@",@"delete.png"];
+                NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+                image = [UIImage imageNamed:imageName
+                                   inBundle:bundle compatibleWithTraitCollection:nil];
+            }
                 break;
             case 3://确定
                 title = @"确定";
@@ -136,7 +142,8 @@
                 break;
         }
         
-        UIButton *button = [UIButton createButton:frame title:title tag:i+16 image:image selector:@selector(click:)];
+        UIButton *button = [UIButton createButton:frame title:title tag:i+16 image:image];
+         [button addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
         [button setBackgroundColor:[JYSafeKeyboardConfigure defaultManager].inputItemBackgroundColor];
         if (i==2) {
             CGFloat imageHeight = button.keyboard_h*2/3;
@@ -157,7 +164,7 @@
             if ([self.delegate respondsToSelector:@selector(numberView02_clickInputItem:)]) {
                 [self.delegate numberView02_clickInputItem:sender];
             } else {
-                NSLog(@"JYAccessoryView 代理未实行");
+                //NSLog(@"JYAccessoryView 代理未实行");
             }
         }
             break;
@@ -165,7 +172,7 @@
             if ([self.delegate respondsToSelector:@selector(numberView02_clickStore:)]) {
                 [self.delegate numberView02_clickStore:1];
             } else {
-                NSLog(@"JYAccessoryView 代理未实行");
+                //NSLog(@"JYAccessoryView 代理未实行");
             }
         }
             break;
@@ -173,7 +180,7 @@
             if ([self.delegate respondsToSelector:@selector(numberView02_clickStore:)]) {
                 [self.delegate numberView02_clickStore:1.0/2];
             } else {
-                NSLog(@"JYAccessoryView 代理未实行");
+                //NSLog(@"JYAccessoryView 代理未实行");
             }
            
         }
@@ -182,7 +189,7 @@
             if ([self.delegate respondsToSelector:@selector(numberView02_clickStore:)]) {
                 [self.delegate numberView02_clickStore:1.0/3];
             } else {
-                NSLog(@"JYAccessoryView 代理未实行");
+                //NSLog(@"JYAccessoryView 代理未实行");
             }
         }
             break;
@@ -190,7 +197,7 @@
             if ([self.delegate respondsToSelector:@selector(numberView02_clickStore:)]) {
                 [self.delegate numberView02_clickStore:1.0/4];
             } else {
-                NSLog(@"JYAccessoryView 代理未实行");
+                //NSLog(@"JYAccessoryView 代理未实行");
             }
         }
             break;
@@ -198,7 +205,7 @@
             if ([self.delegate respondsToSelector:@selector(numberView02_clickFinish:)]) {
                 [self.delegate numberView02_clickFinish:sender];
             } else {
-                NSLog(@"JYAccessoryView 代理未实行");
+                //NSLog(@"JYAccessoryView 代理未实行");
             }
         }
             break;
@@ -218,7 +225,7 @@
             if ([self.delegate respondsToSelector:@selector(numberView02_clickFinish:)]) {
                 [self.delegate numberView02_clickFinish:sender];
             } else {
-                NSLog(@"JYAccessoryView 代理未实行");
+                //NSLog(@"JYAccessoryView 代理未实行");
             }
         }
             break;

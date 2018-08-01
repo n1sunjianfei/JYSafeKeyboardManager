@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <WebKit/WKWebView.h>
 @interface JYTextField : UITextField
 @property(nonatomic,strong) NSString *inputId;
-@property(nonatomic,strong) UIWebView *tmpWebView;
+@property(nonatomic,strong) id tmpWebView;
 
 @end

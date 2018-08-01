@@ -30,4 +30,14 @@
 6、是否使用InputAccessView
 
     [[JYSafeKeyboardConfigure defaultManager] setIsUsedInputAccessView:NO];
+    
+7、web调起键盘，因为系统焦点的转移，会出现键盘先隐藏再显示的过程，所以增加一种方式，允许直接添加键盘的view进行输入
+
+    //web第一种输入方式，使用window上添加键盘view，这种方式处理使用比较麻烦，需要及时删除键盘view才行。
+    [JYSafeKeyboardMain showJYSafeKeyboard:[JYWebviewKeyboardManager shareWebViewManager].tmpTextField type:[self returnKeyboardType:keyboardType]];
+    
+    //web第二种输入方式，使用类系统键盘方式，但是存在点击一个输入框就隐藏键盘然后重新显示的问题  
+    [JYSafeKeyboardMain useJYSafeKeyboard:[JYWebviewKeyboardManager shareWebViewManager].tmpTextField type:[self returnKeyboardType:keyboardType]];
+    [textField becomeFirstResponder];
+    [scrollView addSubview:textField];
 

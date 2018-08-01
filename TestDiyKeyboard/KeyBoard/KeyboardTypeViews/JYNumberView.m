@@ -45,13 +45,19 @@
         
         switch (i) {
             case 9:{
-                UIButton *button = [UIButton createButton:frame title:@"ABC" tag:i image:nil selector:@selector(click:)];
+                UIButton *button = [UIButton createButton:frame title:@"ABC" tag:i image:nil];
+                 [button addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
                 button.backgroundColor = [JYSafeKeyboardConfigure defaultManager].functionItemBackgroundColor;
                 [numberView addSubview:button];
             }
                 break;
             case 11:{
-                UIButton *button = [UIButton createButton:frame title:@"" tag:i image:[UIImage imageNamed:@"delete.png"] selector:@selector(click:)];
+                NSString *imageName = [NSString stringWithFormat:@"SafeKeyBoard.bundle/%@",@"delete.png"];
+                NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+                UIImage *image = [UIImage imageNamed:imageName
+                                   inBundle:bundle compatibleWithTraitCollection:nil];
+                UIButton *button = [UIButton createButton:frame title:@"" tag:i image:image];
+                [button addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
                 CGFloat imageHeight = button.keyboard_h*2/3;
                 
                 [button setImageEdgeInsets:UIEdgeInsetsMake((button.keyboard_h-imageHeight)/2, (button.keyboard_w-imageHeight)/2, (button.keyboard_h-imageHeight)/2, (button.keyboard_w-imageHeight)/2)];
@@ -66,7 +72,8 @@
                     titleInt = arc4random() % 10;
                 } while ([tmpArray containsObject:[NSNumber numberWithInt:titleInt]]);
                 [tmpArray addObject:[NSNumber numberWithInt:titleInt]];
-                UIButton *button = [UIButton createButton:frame title:[NSString stringWithFormat:@"%d",titleInt] tag:i image:nil selector:@selector(click:)];
+                UIButton *button = [UIButton createButton:frame title:[NSString stringWithFormat:@"%d",titleInt] tag:i image:nil];
+                 [button addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
                 [button setBackgroundColor:[JYSafeKeyboardConfigure defaultManager].inputItemBackgroundColor];
                 [numberView addSubview:button];
             }
@@ -92,7 +99,7 @@
         if ([self.delegate respondsToSelector:@selector(numberView_clickInputItem:)]) {
             [self.delegate numberView_clickInputItem:sender];
         } else {
-            NSLog(@"JYAccessoryView 代理未实行");
+            //NSLog(@"JYAccessoryView 代理未实行");
         }
     }
 }

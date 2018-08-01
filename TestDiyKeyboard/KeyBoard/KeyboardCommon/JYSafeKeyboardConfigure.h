@@ -31,6 +31,8 @@
 @property(nonatomic,assign) float storeValue;
 //是否使用InputAccessView
 @property(nonatomic,assign) BOOL isUsedInputAccessView;
+//回传value值的回调名称
+@property(nonatomic,strong) NSString *callBackFinishedName;
 
 + (instancetype)defaultManager;
 

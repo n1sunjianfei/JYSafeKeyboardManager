@@ -10,5 +10,5 @@
 
 @interface UIButton (SafeKeyboard)
 #pragma mark - 创建按钮
-+ (UIButton*)createButton:(CGRect)frame title:(NSString*)title tag:(NSInteger)tag image:(UIImage*)image selector:(SEL)seletcor;
++ (UIButton*)createButton:(CGRect)frame title:(NSString*)title tag:(NSInteger)tag image:(UIImage*)image;
 @end

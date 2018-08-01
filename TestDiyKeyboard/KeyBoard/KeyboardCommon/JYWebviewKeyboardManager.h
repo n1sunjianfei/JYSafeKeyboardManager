@@ -8,7 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <WebKit/WKWebView.h>
+#import "JYTextField.h"
 
 @interface JYWebviewKeyboardManager : NSObject
-+ (void)showKeyboardWithType:(NSInteger)keyboardType inputId:(NSString*)inputId webView:(UIWebView*)webview frame:(CGRect)textFieldFrame;
+@property(nonatomic,strong) JYTextField *tmpTextField;
+
++ (instancetype)shareWebViewManager;
++ (void)showKeyboardWithType:(NSString*)keyboardType inputId:(NSString*)inputId webView:(id)webview frame:(CGRect)textFieldFrame;
 @end

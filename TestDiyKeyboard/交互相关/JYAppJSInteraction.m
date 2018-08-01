@@ -124,11 +124,9 @@ static NSString * const methodNameLivenessDetectorFinished = @"livenessDetectorF
 
 - (void)showKeyBoard:(NSString*)param{
     NSDictionary *dic = [self parseDictWithJsonString:param];
-    NSDictionary *frameDic = dic[@"frame"];
-    NSLog(@"%@",dic);
     [JYSafeKeyboardConfigure defaultManager].storeValue = [dic[@"store"] floatValue];
-    
-    [JYSafeKeyboardManager useWebViewSafeKeyboardWithType:[dic[@"type"] integerValue] inputId:dic[@"inputid"] webView:self.webview frameDic:frameDic];
+    [JYSafeKeyboardManager useWebViewSafeKeyboardWithType:dic[@"type"] inputId:dic[@"inputid"] webView:self.webview frameDic:nil];
+
 }
 
 - (void)dealloc {

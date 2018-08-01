@@ -8,6 +8,7 @@
 
 #import "JYAccessoryView.h"
 #import "JYSafeKeyboardConfigure.h"
+#import "UIButton+SafeKeyboard.h"
 @implementation JYAccessoryView
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
@@ -23,19 +24,22 @@
     [self setupUI];
 }
 - (void)setupUI{
-    UIToolbar *toolbar = [[UIToolbar alloc]initWithFrame:self.bounds];
-//    toolbar.backgroundColor = [JYSafeKeyboardConfigure defaultManager].inputAccessViewBgColor;
-    toolbar.barTintColor = [JYSafeKeyboardConfigure defaultManager].inputAccessViewBgColor;
-    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(clickFinished:)];
-    [item setTintColor:[JYSafeKeyboardConfigure defaultManager].inputAccessViewTextColor];
-    toolbar.items = @[item];
+
+    UIView *toolbar = [[UIView alloc]initWithFrame:self.bounds];
+    toolbar.backgroundColor = [JYSafeKeyboardConfigure defaultManager].inputAccessViewBgColor;
+
+    UIButton *button = [UIButton createButton:CGRectMake(0, 0, 50, CGRectGetHeight(toolbar.bounds)) title:@"完成" tag:0 image:nil];
+    [button addTarget:self action:@selector(clickFinished:) forControlEvents:UIControlEventTouchUpInside];
+    [button setBackgroundColor:toolbar.backgroundColor];
+    [button setTitleColor:[JYSafeKeyboardConfigure defaultManager].inputAccessViewTextColor forState:UIControlStateNormal];
+    [toolbar addSubview:button];
     [self addSubview:toolbar];
 }
 - (void)clickFinished:(id)sender{
     if ([self.delegate respondsToSelector:@selector(accessoryView_clickFinish:)]) {
         [self.delegate accessoryView_clickFinish:sender];
     } else {
-        NSLog(@"JYAccessoryView 代理未实行");
+        //NSLog(@"JYAccessoryView 代理未实行");
     }
 }
 

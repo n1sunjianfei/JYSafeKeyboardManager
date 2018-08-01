@@ -118,9 +118,17 @@
                 frame = CGRectMake(leftMargin, midMargin*3+itemHeight*2, functionItemWidth, itemHeight);
                 btnColor = [JYSafeKeyboardConfigure defaultManager].functionItemBackgroundColor;
                 if(self.isLower){
-                    image = [UIImage imageNamed:@"up1.png"];
+                    NSString *imageName = [NSString stringWithFormat:@"SafeKeyBoard.bundle/%@",@"up1.png"];
+                    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+                    image = [UIImage imageNamed:imageName
+                                       inBundle:bundle compatibleWithTraitCollection:nil];
+//                    image = [UIImage imageNamed:@"up1.png"];
                 }else{
-                    image = [UIImage imageNamed:@"up2.png"];
+                    NSString *imageName = [NSString stringWithFormat:@"SafeKeyBoard.bundle/%@",@"up2.png"];
+                    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+                    image = [UIImage imageNamed:imageName
+                                       inBundle:bundle compatibleWithTraitCollection:nil];
+//                    image = [UIImage imageNamed:@"up2.png"];
                     
                 }
             }
@@ -129,7 +137,11 @@
                 CGFloat leftMargin = minMaigin;
                 frame = CGRectMake(width - leftMargin - functionItemWidth, midMargin*3+itemHeight*2, functionItemWidth, itemHeight);
                 btnColor = [JYSafeKeyboardConfigure defaultManager].functionItemBackgroundColor;
-                image = [UIImage imageNamed:@"delete.png"];
+//                image = [UIImage imageNamed:@"delete.png"];
+                NSString *imageName = [NSString stringWithFormat:@"SafeKeyBoard.bundle/%@",@"delete.png"];
+                NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+                image = [UIImage imageNamed:imageName
+                                   inBundle:bundle compatibleWithTraitCollection:nil];
             }
                 break;
             case 28:{//第四行切换输入法按钮
@@ -164,7 +176,8 @@
             btnColor = [JYSafeKeyboardConfigure defaultManager].inputItemBackgroundColor;
         }
         
-        UIButton *button = [UIButton createButton:frame title:title tag:i image:image selector:@selector(click:)];
+        UIButton *button = [UIButton createButton:frame title:title tag:i image:image];
+         [button addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
         if (btnColor) {
             [button setBackgroundColor:btnColor];
         }
@@ -227,7 +240,7 @@
             break;
         
         default:
-            NSLog(@"字母键盘点击了其他按钮");
+            //NSLog(@"字母键盘点击了其他按钮");
 
             break;
             
