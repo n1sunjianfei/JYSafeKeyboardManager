@@ -20,23 +20,22 @@
 #import "JYSafeKeyboardConfigure.h"
 static JYSafeKeyboardMain *globalKeyBoard;
 
-@interface JYSafeKeyboardMain()<JYAccessoryViewDelegate,JYNumberViewDelegate,JYLetterViewDelegate,JYNumberView01Delegate,JYNumberView02Delegate,UITextViewDelegate>
+@interface JYSafeKeyboardMain()<JYAccessoryViewDelegate,JYKeyboardMainViewDelegate,UITextViewDelegate>
 
 @property(nonatomic,strong) JYAccessoryView *inputAccessoryView;//顶部视图
-@property(nonatomic,strong) UIView *keyBoardView;//键盘容器
-@property(nonatomic,strong) JYLetterView *letterView;//字母键盘
-@property(nonatomic,strong) JYNumberView *numberView;//数字键盘
-@property(nonatomic,strong) JYNumberView01 *numberView01;//数字键盘01
-@property(nonatomic,strong) JYNumberView02 *numberView02;//数字键盘01
+@property(nonatomic,strong) JYKeyboardMainView *keyBoardView;//键盘容器
+
+@property(nonatomic,strong) JYKeyboardMainView *webKeyBoardView;//键盘容器
 
 @property(nonatomic,assign) BOOL isNewResponder;//朝向改变，前后台切换引起的键盘弹出
+@property(nonatomic,assign) BOOL isWebInput;//是否是webview调起的
+//@property(nonatomic,assign) BOOL isWebKeboardShowing;//是否是webview调起的
 
 @end
 
 @implementation JYSafeKeyboardMain
+
 #pragma mark - 开启方法
-
-
 + (void)useJYSafeKeyboard:(id)inputField type:(SafeKeyboardType)keyboardType{
     if ([inputField isKindOfClass:[UITextField class]]) {
         UITextField *realInputField = (UITextField*)inputField;
@@ -44,6 +43,8 @@ static JYSafeKeyboardMain *globalKeyBoard;
         realInputField.safeKeyboardType = [NSNumber numberWithInteger:keyboardType];
         if ([JYSafeKeyboardConfigure defaultManager].isUsedInputAccessView) {
            realInputField.inputAccessoryView = [JYSafeKeyboardMain sharedKeyBoard].inputAccessoryView ;
+        }else{
+            realInputField.inputAccessoryView = nil ;
         }
         
         realInputField.inputView = [JYSafeKeyboardMain sharedKeyBoard].keyBoardView;
@@ -55,6 +56,8 @@ static JYSafeKeyboardMain *globalKeyBoard;
         realInputField.safeKeyboardType = [NSNumber numberWithInteger:keyboardType];
         if ([JYSafeKeyboardConfigure defaultManager].isUsedInputAccessView) {
             realInputField.inputAccessoryView = [JYSafeKeyboardMain sharedKeyBoard].inputAccessoryView ;
+        }else{
+            realInputField.inputAccessoryView = nil ;
         }
         realInputField.inputView = [JYSafeKeyboardMain sharedKeyBoard].keyBoardView;
         [realInputField addNotification];
@@ -63,6 +66,51 @@ static JYSafeKeyboardMain *globalKeyBoard;
         return;
     }
 }
+#pragma mark -
+
++ (void)showJYSafeKeyboard:(id)inputField type:(SafeKeyboardType)keyboardType{
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+    CGFloat boardHeight = [JYSafeKeyboardMain sharedKeyBoard].webKeyBoardView.keyboard_h;
+    JYKeyboardMainView *keyboardMainView = [JYSafeKeyboardMain sharedKeyBoard].webKeyBoardView;
+    keyboardMainView.delegate = [JYSafeKeyboardMain sharedKeyBoard];
+    [keyboardMainView loadKeyboardView:keyboardType];
+    [JYSafeKeyboardMain sharedKeyBoard].isWebInput = YES;
+    
+    //
+    if (![window.subviews containsObject:keyboardMainView]) {
+        keyboardMainView.frame = CGRectMake(0, screenHeight, screenWidth, boardHeight);
+        [window addSubview:keyboardMainView];
+        [UIView animateWithDuration:0.3 animations:^{
+            keyboardMainView.transform = CGAffineTransformMakeTranslation(0,-boardHeight);
+        }completion:^(BOOL finished) {
+
+        }];
+    }
+   
+    
+}
++ (void)hideWebKeyboard{
+    [JYSafeKeyboardMain sharedKeyBoard].isWebInput = NO;
+
+    //等待0.2秒，若仍然使用web键盘会充值上面这个参数，不进行隐藏操作
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (![JYSafeKeyboardMain sharedKeyBoard].isWebInput) {
+            JYKeyboardMainView *keyboardMainView = [JYSafeKeyboardMain sharedKeyBoard].webKeyBoardView;
+            UIWindow *window = [UIApplication sharedApplication].keyWindow;
+            if ([window.subviews containsObject:keyboardMainView]) {
+                
+                [UIView animateWithDuration:0.3 animations:^{
+                    keyboardMainView.transform = CGAffineTransformMakeTranslation(0,keyboardMainView.keyboard_h);
+                }completion:^(BOOL finished) {
+                    [keyboardMainView removeFromSuperview];
+                    keyboardMainView.transform = CGAffineTransformIdentity;
+                }];
+            }
+        }
+    });
+}
 #pragma mark - 键盘管理单例
 + (instancetype)sharedKeyBoard{
     static dispatch_once_t onceToken;
@@ -70,6 +118,8 @@ static JYSafeKeyboardMain *globalKeyBoard;
         globalKeyBoard = [[self alloc] init];
         // 监听键盘
         [[NSNotificationCenter defaultCenter] addObserver:globalKeyBoard selector:@selector(keyboardWillShowAction:) name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:globalKeyBoard selector:@selector(keyboardDidShowAction:) name:UIKeyboardDidShowNotification object:nil];
+
         [[NSNotificationCenter defaultCenter] addObserver:globalKeyBoard selector:@selector(keyboardWillHideAction:) name:UIKeyboardWillHideNotification object:nil];
     });
     
@@ -79,10 +129,18 @@ static JYSafeKeyboardMain *globalKeyBoard;
 - (void)begin:(UITextField*)field{
     self.isNewResponder = YES;
 }
+
+
 #pragma mark - 键盘即将显示
 - (void)keyboardWillShowAction:(NSNotification*)notify{
     //首先通过这两行代码获取第一相应
-    UIView * firstResponder = [self getCurrentFirstResponder];
+    UIView * firstResponder = [JYKeyboardMainView getCurrentFirstResponder];
+//    //处理屏幕方向切换
+//    if (self.isWebInput) {
+//        CGSize size = [UIScreen mainScreen].bounds.size;
+//        self.keyBoardView.frame = CGRectMake(0, size.height - 210, size.width, 210);
+//    }
+    [JYSafeKeyboardMain hideWebKeyboard];
     //然后再通过判断响应类做出相应的响应
     if ([firstResponder isKindOfClass:[UITextField class]]) {
         UITextField *realInputField = (UITextField*)firstResponder;
@@ -90,29 +148,32 @@ static JYSafeKeyboardMain *globalKeyBoard;
             if (self.isNewResponder) {
                 [[JYSafeKeyboardMain sharedKeyBoard] loadKeyboardView:[[JYSafeKeyboardMain sharedKeyBoard] changeToKeyboardType:realInputField.safeKeyboardType]];
                 self.isNewResponder = NO;
-
+               
             }
             
         }else{
-            NSLog(@"未开启安全键盘");
+            //NSLog(@"未开启安全键盘");
         }
-        NSLog(@"UITextField");
+        //NSLog(@"UITextField");
     } else if ([firstResponder isKindOfClass:[UITextView class]]) {
         UITextView *realInputField = (UITextView*)firstResponder;
         if ([realInputField.isUseSafeKeyboard boolValue]) {
+            
             if (![realInputField.isBeginEditing boolValue]) {
                 [[JYSafeKeyboardMain sharedKeyBoard] loadKeyboardView:[[JYSafeKeyboardMain sharedKeyBoard] changeToKeyboardType:realInputField.safeKeyboardType]];
+                
             }
         }else{
-            NSLog(@"未开启安全键盘");
+            //NSLog(@"未开启安全键盘");
         }
-        NSLog(@"UITextView");
+        //NSLog(@"UITextView");
     }else{
-        NSLog(@"非 UITextField 或 UITextView 类型调起键盘");
+        //NSLog(@"非 UITextField 或 UITextView 类型调起键盘");
 
+//        [firstResponder resignFirstResponder];
     }
 }
-- (void)keyboardWillChangeAction:(NSNotification*)notify{
+- (void)keyboardDidShowAction:(NSNotification*)notify{
 
 }
 
@@ -142,7 +203,7 @@ static JYSafeKeyboardMain *globalKeyBoard;
 }
 //键盘即将隐藏
 - (void)keyboardWillHideAction:(NSNotification*)notify{
-    
+
 }
 
 #pragma mark - 键盘相关 view 懒加载
@@ -157,110 +218,49 @@ static JYSafeKeyboardMain *globalKeyBoard;
     }
     return _inputAccessoryView;
 }
-
-- (UIView*)keyBoardView{
+- (JYKeyboardMainView*)keyBoardView{
     if (!_keyBoardView) {
-        _keyBoardView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds), 210)];
+        //
+        _keyBoardView = [[JYKeyboardMainView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds), 210)];
+        _keyBoardView.backgroundColor = [UIColor redColor];
+        _keyBoardView.delegate = self;
+        
     }
     return _keyBoardView;
 }
-
-- (JYLetterView*)letterView{
-    if (!_letterView) {
-        _letterView = [[JYLetterView alloc]init];
-        _letterView.delegate = self;
+- (JYKeyboardMainView*)webKeyBoardView{
+    if (!_webKeyBoardView) {
+        //
+        _webKeyBoardView = [[JYKeyboardMainView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds), 210)];
+        
+        _webKeyBoardView.delegate = self;
+        
     }
-    return _letterView;
-}
-
-- (JYNumberView*)numberView{
-    if (!_numberView) {
-        _numberView = [[JYNumberView alloc]init];
-        _numberView.delegate = self;
-    }
-    return _numberView;
-}
-
-- (JYNumberView01*)numberView01{
-    if (!_numberView01) {
-        _numberView01 = [[JYNumberView01 alloc]init];
-        _numberView01.delegate = self;
-    }
-    return _numberView01;
-}
-- (JYNumberView02*)numberView02{
-    if (!_numberView02) {
-        _numberView02 = [[JYNumberView02 alloc]init];
-        _numberView02.delegate = self;
-    }
-    return _numberView02;
+    return _webKeyBoardView;
 }
 #pragma mark - 键盘相关方法
 
 //结束输入
 - (void)endEditing{
-    [[self getCurrentFirstResponder] endEditing:YES];
-    
+    if (self.isWebInput) {
+        [JYSafeKeyboardMain hideWebKeyboard];
+    }else{
+    [[JYKeyboardMainView getCurrentFirstResponder] endEditing:YES];
+    }
 }
 
 //切换键盘类型
 - (void)loadKeyboardView:(SafeKeyboardType)keyBoardType{
-    //重新加载的时候需要将字符小写
-    [self.letterView lowerLetters];
-    [self.keyBoardView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    switch (keyBoardType) {
-        case SafeKeyboard_Type_Default:{
-            NSDictionary *views = NSDictionaryOfVariableBindings(_letterView,_keyBoardView);
-            [self.keyBoardView addSubview:self.letterView];
-            [self.letterView setTranslatesAutoresizingMaskIntoConstraints:NO];
-            [self.keyBoardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_letterView]|" options:0 metrics:nil views:views]];
-            //view1高度为40，距离底端距离为0
-            [self.keyBoardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_letterView(==_keyBoardView)]" options:0 metrics:nil views:views]];
-        }
-            break;
-        case SafeKeyboard_Type_Number:{
 
-            [self.keyBoardView addSubview:self.numberView];
-            [self.numberView setTranslatesAutoresizingMaskIntoConstraints:NO];
-            NSDictionary *views = NSDictionaryOfVariableBindings(_numberView,_keyBoardView);
-            //view1距离superview两端距离都为0
-            [self.keyBoardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_numberView]|" options:0 metrics:nil views:views]];
-            //view1高度为40，距离底端距离为0
-            [self.keyBoardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_numberView(==_keyBoardView)]" options:0 metrics:nil views:views]];
-        }
-            break;
-        case SafeKeyboard_Type_Number01:{
-            
-            [self.keyBoardView addSubview:self.numberView01];
-            [self.numberView01 setTranslatesAutoresizingMaskIntoConstraints:NO];
-            NSDictionary *views = NSDictionaryOfVariableBindings(_numberView01,_keyBoardView);
-            //view1距离superview两端距离都为0
-            [self.keyBoardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_numberView01]|" options:0 metrics:nil views:views]];
-            //view1高度为40，距离底端距离为0
-            [self.keyBoardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_numberView01(==_keyBoardView)]" options:0 metrics:nil views:views]];
-        }
-            break;
-        case SafeKeyboard_Type_Number02:{
-            
-            [self.keyBoardView addSubview:self.numberView02];
-            [self.numberView02 setTranslatesAutoresizingMaskIntoConstraints:NO];
-            NSDictionary *views = NSDictionaryOfVariableBindings(_numberView02,_keyBoardView);
-            //view1距离superview两端距离都为0
-            [self.keyBoardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_numberView02]|" options:0 metrics:nil views:views]];
-            //view1高度为40，距离底端距离为0
-            [self.keyBoardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_numberView02(==_keyBoardView)]" options:0 metrics:nil views:views]];
-        }
-            break;
-        default:
-//            self.letterView.hidden = NO;
-//            self.numberView.hidden = YES;
-//            self.numberView01.hidden = YES;
-            break;
-    }
+    [self.keyBoardView loadKeyboardView:keyBoardType];
 }
 //删除操作
 - (void)deletCharacter{
-    UIView * firstResponder = [self getCurrentFirstResponder];
+    
+    UIView * firstResponder = [JYKeyboardMainView getCurrentFirstResponder];
+    if (self.isWebInput) {
+        firstResponder = [JYWebviewKeyboardManager shareWebViewManager].tmpTextField;
+    }
     //然后再通过判断响应类做出相应的响应
     if ([firstResponder isKindOfClass:[UITextField class]]) {
         UITextField *realInputField = (UITextField*)firstResponder;
@@ -269,12 +269,14 @@ static JYSafeKeyboardMain *globalKeyBoard;
         if (range.length==0&&range.location>0) {
             range = NSMakeRange(range.location-1, 1);
         }
-        
+        if (self.isWebInput&&realInputField.text.length>0) {
+            range = NSMakeRange(realInputField.text.length-1, 1);
+        }
         realInputField.text = [realInputField.text?:@"" stringByReplacingCharactersInRange:range withString:@""];
         [realInputField keyboard_SetSelectedRange:NSMakeRange(range.location, 0)];
         
         
-        NSLog(@"UITextField");
+        //NSLog(@"UITextField");
     } else if ([firstResponder isKindOfClass:[UITextView class]]) {
         UITextView *realInputField = (UITextView*)firstResponder;
         
@@ -290,12 +292,15 @@ static JYSafeKeyboardMain *globalKeyBoard;
 }
 //清空操作
 - (void)clearAllText{
-    UIView * firstResponder = [self getCurrentFirstResponder];
+    UIView * firstResponder = [JYKeyboardMainView getCurrentFirstResponder];
+    if (self.isWebInput) {
+        firstResponder = [JYWebviewKeyboardManager shareWebViewManager].tmpTextField;
+    }
     //然后再通过判断响应类做出相应的响应
     if ([firstResponder isKindOfClass:[UITextField class]]) {
         UITextField *realInputField = (UITextField*)firstResponder;
         realInputField.text = @"";
-        NSLog(@"UITextField");
+        //NSLog(@"UITextField");
     } else if ([firstResponder isKindOfClass:[UITextView class]]) {
         UITextView *realInputField = (UITextView*)firstResponder;
         realInputField.text = @"";
@@ -308,16 +313,23 @@ static JYSafeKeyboardMain *globalKeyBoard;
     
 }
 - (void)changeTextFieldValue:(NSString*)value{
-    UIView * firstResponder = [self getCurrentFirstResponder];
+    UIView * firstResponder = [JYKeyboardMainView getCurrentFirstResponder];
+    if (self.isWebInput) {
+        firstResponder = [JYWebviewKeyboardManager shareWebViewManager].tmpTextField;
+    }
     //然后再通过判断响应类做出相应的响应
     if ([firstResponder isKindOfClass:[UITextField class]]) {
         UITextField *realInputField = (UITextField*)firstResponder;
         
         NSRange range = [realInputField keyboard_SelectedRange];
+        
+        if (self.isWebInput) {
+            range = NSMakeRange(realInputField.text.length, 0);
+        }
         realInputField.text = [realInputField.text?:@"" stringByReplacingCharactersInRange:range withString:value];
         [realInputField keyboard_SetSelectedRange:NSMakeRange(range.location+value.length, 0)];
         
-        NSLog(@"UITextField");
+//        NSLog(@"UITextField");
     } else if ([firstResponder isKindOfClass:[UITextView class]]) {
         UITextView *realInputField = (UITextView*)firstResponder;
         
@@ -327,93 +339,10 @@ static JYSafeKeyboardMain *globalKeyBoard;
         [realInputField keyboard_SetSelectedRange:NSMakeRange(range.location+value.length, 0)];
     }
 }
-//获取当前响应输入框
-- (UIView*)getCurrentFirstResponder{
-    UIWindow * keyWindow = [[UIApplication sharedApplication] keyWindow];
-    UIView * firstResponder = [keyWindow performSelector:@selector(firstResponder)];
-    return firstResponder;
-}
-#pragma mark - JYLetterView 代理方法
-//点击输入类型的按钮
-- (void)leterView_clickInputItem:(UIButton *)sender{
-    [self clickInputItem:sender];
-}
-//点击删除按钮
-- (void)leterView_clickDelete:(UIButton *)sender{
-    [self deletCharacter];
-}
-- (void)leterView_clickFinish:(UIButton *)sender{
-    [self endEditing];
-}
-- (void)leterView_clickChangeInputWay:(UIButton *)sender{
-    [self loadKeyboardView:SafeKeyboard_Type_Number];
-}
 
 #pragma mark - JYAccessoryView 代理
 
 - (void)accessoryView_clickFinish:(id)sender{
-    [self endEditing];
-}
-
-
-#pragma mark - JYNumberView 代理
-- (void)numberView_clickChangeInputWay:(UIButton *)sender {
-    [self loadKeyboardView:SafeKeyboard_Type_Default];
-}
-
-- (void)numberView_clickDelete:(UIButton *)sender {
-    [self deletCharacter];
-}
-
-- (void)numberView_clickFinish:(UIButton *)sender {
-    [self endEditing];
-}
-
-- (void)numberView_clickInputItem:(UIButton *)sender {
-    [self clickInputItem:sender];
-}
-#pragma mark - JYNumberView01 代理
-- (void)numberView01_clickChangeInputWay:(UIButton *)sender {
-    [self loadKeyboardView:SafeKeyboard_Type_Default];
-}
-
-- (void)numberView01_clickDelete:(UIButton *)sender {
-    [self deletCharacter];
-}
-
-- (void)numberView01_clickFinish:(UIButton *)sender {
-    [self endEditing];
-}
-
-- (void)numberView01_clickInputItem:(UIButton *)sender {
-    [self clickInputItem:sender];
-}
-- (void)numberView01_clickClear:(UIButton *)sender {
-    [self clearAllText];
-}
-
-#pragma mark - JYNumberView02 代理
-- (void)numberView02_clickChangeInputWay:(UIButton *)sender {
-    [self loadKeyboardView:SafeKeyboard_Type_Default];
-}
-
-- (void)numberView02_clickDelete:(UIButton *)sender {
-    [self deletCharacter];
-}
-
-- (void)numberView02_clickFinish:(UIButton *)sender {
-    [self endEditing];
-}
-
-- (void)numberView02_clickInputItem:(UIButton *)sender {
-    [self clickInputItem:sender];
-}
-- (void)numberView02_clickClear:(UIButton *)sender {
-    [self clearAllText];
-}
-- (void)numberView02_clickStore:(float)storeValue{
-    [self clearAllText];
-    float store = [JYSafeKeyboardConfigure defaultManager].storeValue;
-    [self changeTextFieldValue:[NSString stringWithFormat:@"%.2f",store*storeValue]];
+        [[JYKeyboardMainView getCurrentFirstResponder] resignFirstResponder];
 }
 @end
