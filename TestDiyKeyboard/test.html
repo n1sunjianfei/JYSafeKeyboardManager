@@ -1,84 +1,97 @@
 <!DOCTYPE html>
-<html>
-    <head lang="en">
-        
-        
-<!--        <meta name="view" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">-->
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" name="viewport">
-        <meta http-equiv="X-UA-Compatible">
-
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+            <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" name="viewport">
+                <title>SDK</title>
     </head>
-    <body style="font-size:12px;line-height:40px">
-
-        <div style="margin-top: 10px">
-            <h1>Objective-C和JavaScript交互-安全键盘</h1>
-            <input style="font-size:12px" id = "inputid01" type="text" value="字母键盘" onclick="showKeyBoard02('inputid01','0')">
-            
-        </div>
-<!--        -->
-<!--        <div >-->
-<!--            <input style="font-size:12px" type="button" value="调起数字键盘" onclick="showKeyBoard02('inputid01','1')">-->
-<!--        </div>-->
-        <div>
-            <input style="font-size:12px" id = "storeId" readonly="readonly" type="text" value="调起仓库键盘" onclick="storeKeyBoard('storeId')">
+    <body>
         
-        <div>
-            <input style="font-size:12px" id = "inputid02" readonly="readonly" type="text" value="数字键盘" onclick="showKeyBoard02('inputid02','1')">
-        </div>
-        <div>
-            <input style="font-size:12px" id = "inputid03" readonly="readonly" type="text" value="数字键盘01" onclick="showKeyBoard02('inputid03','2')">
-        </div>
-        <div>
-            <input style="font-size:12px" id = "inputid04" readonly="readonly" type="text" value="数字键盘02" onclick="showKeyBoard02('inputid04','3')">
-        </div>
-        <div>
-            <input style="font-size:12px" id = "inputid05" readonly="readonly" type="text" value="shuruwenzi" onclick="showKeyBoard02('inputid05')">
-        </div>
-        <div>
-            <input style="font-size:12px" id = "inputid06"  readonly="readonly" type="text" value="shuruwenzi" onclick="showKeyBoard02('inputid06')">
-        </div>
-        <div>
-            <input style="font-size:12px" id = "inputid07" readonly="readonly" type="text" value="shuruwenzi" onclick="showKeyBoard02('inputid07')">
-        </div>
-        <div>
-            <input style="font-size:12px" id = "inputid08" readonly="readonly" type="text" value="shuruwenzi" onclick="showKeyBoard02('inputid08')">
-        </div>
-        <div>
-            <input style="font-size:12px" id = "inputid09" readonly="readonly" type="text" value="shuruwenzi" onclick="showKeyBoard02('inputid09')">
-        </div>
-        <div>
-            <input style="font-size:12px" id = "inputid10" readonly="readonly" type="text" value="shuruwenzi" onclick="showKeyBoard02('inputid10')">
-        </div>
-
-        <script>
-            var showKeyBoard01 = function(inputid) {
-                var shareInfo = JSON.stringify({"type": "0", "inputid": inputid});
-                AppJS.showKeyBoard(shareInfo);
+        <style type="text/css">
+            
+            
+            .ss {
+                width: 100pt;
+                height: 25pt;
+                /*background-color: #0088fb;*/
+                margin-bottom: 10pt;
             }
-            var storeKeyBoard = function(inputid) {
-                var shareInfo = JSON.stringify({"type": "3", "inputid": inputid,"store":"5000"});
-                AppJS.showKeyBoard(shareInfo);
-            }
-            var showKeyBoard02 = function(inputid,type) {
-                var input = document.getElementById(inputid); // 根据ID取得元素对象
-                var sizeObj = input.getBoundingClientRect(); // 取得元素距离窗口的绝对位置
-                // 窗口的滚动偏移（垂直、水平）
-                var bodyOffset = {top: document.body.scrollTop, left: document.body.scrollLeft};
-                
-                // 元素相对于页面的绝对位置 = 窗口滚动偏移 + 元素相对于窗口的绝对位置
-                var inputOffsetTop = sizeObj.top + bodyOffset.top; // 距顶部
-                var inputOffsetLeft = sizeObj.left + bodyOffset.left; // 距左侧
-                var widthScreen = window.screen.width;
-                var widthScroll = document.body.scrollWidth;
-                var ratio = window.devicePixelRatio;
-                var shareInfo = JSON.stringify({"type": type, "inputid": inputid,"frame":{"top":inputOffsetTop,"left":inputOffsetLeft,"width":sizeObj.width,"height":sizeObj.height,"screen_ratio":widthScroll/widthScreen,"ratio":ratio,"widthScreen":widthScreen,"widthScroll":widthScroll}});
-                AppJS.showKeyBoard(shareInfo);
-            }
-
-        var showKeyBoard01Callback = function(){
-            alert('success');
+        .t {
+            height: 25pt;
+            width: 150pt;
+            border-left-color: #0088fb;
+            text-align: left;
+            /*background-color: #0088fb;*/
+            
+            /*width: 200pt;*/
         }
-        </script>
+        
+            </style>
+        
+        <br>
+          
+            <input class="ss" id = "input_keyboard" type="text"  placeholder="测试测试系统键盘"/>
+            
+            <div>
+                <input class="ss" id = "input_keyboard1" type="text" readonly="readonly" placeholder="测试测试01" onclick="callKeyboard('input_keyboard1','stock')"/>
+            </div>
+            
+            <div>
+                <input class="ss" id = "input_keyboard2" type="text" readonly="readonly" placeholder="测试测试02" onclick="callKeyboard('input_keyboard2','stock')"/>
+            </div>
+            
+            <div>
+                <input class="ss" id = "input_keyboard3" type="text" readonly="readonly" placeholder="测试测试03" onclick="callKeyboard('input_keyboard3','stock')"/>
+            </div>
+            
+            <div>
+                <input class="ss" id = "input_keyboard4" type="text" readonly="readonly" placeholder="测试测试04" onclick="callKeyboard('input_keyboard4','stock')"/>
+            </div>
+            
+            <div >
+                <input class="ss" id = "input_keyboard5" type="text" readonly="readonly"  placeholder="测试测试05" onclick="callKeyboard('input_keyboard5','stock')"/>
+            </div>
+            
+            <!-- <input class="ss" id = "input_keyboard2" type="text" readonly="readonly" onclick="callKeyboard('input_keyboard2','stock')"/>
+             <input class="ss" id = "input_keyboard3" type="text" readonly="readonly" onclick="callKeyboard('input_keyboard3','stock')"/>
+             <input class="ss" id = "input_keyboard4" type="text" readonly="readonly" onclick="callKeyboard('input_keyboard4','stock')"/>
+             <input class="ss" id = "input_keyboard5" type="text" readonly="readonly" onclick="callKeyboard('input_keyboard5','stock')"/> -->
+            <input class="ss" id = "input_keyboard6" type="text" readonly="readonly" placeholder="数字键盘" onclick="callKeyboard('input_keyboard6','number')"/>
+            <input class="ss" id = "input_keyboard7" type="text" readonly="readonly" placeholder="正常可切换的键盘" onclick="callKeyboard('input_keyboard7','normal')"/>
+            <input class="ss" id = "input_keyboard8" type="text" readonly="readonly" placeholder="股票" onclick="callKeyboard('input_keyboard8','stockNumber')"/>
+            <input class="ss" id = "input_keyboard9" type="text" readonly="readonly" placeholder="测试测试" onclick="callKeyboard('input_keyboard9','stockPrice')"/>
+            <input class="ss" id = "input_keyboard10" type="button" placeholder="测试测试" onclick="callKeyboard('input_keyboard10','stock')"/>
+            
+            <script>
+                
+        
+                
+            function callKeyboard(inputId, keyboardType) {
+                
+                // var input = document.getElementById(inputId);
+                // input.blur();
+                document.activeElement.blur()
+                var param = '{\"inputId\":\"' + inputId + '\", "keyboardType\":\"' + keyboardType + '\"}'
+                    AppJS.callKeyboard(param);
+            }
+            
+            function callKeyboardFinished(param) {
+                
+                var info = JSON.parse(param);
+                document.getElementById(info.inputId).value = info.value;
+            }
+            
+            
+            
+            function getElementById(identify) {
+                return document.getElementById(identify);
+            }
+            
+            
+                                 
+            </script>
     </body>
+    
+    
+    
 </html>

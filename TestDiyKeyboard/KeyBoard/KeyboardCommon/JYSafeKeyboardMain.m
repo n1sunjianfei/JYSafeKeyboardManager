@@ -88,8 +88,6 @@ static JYSafeKeyboardMain *globalKeyBoard;
 
         }];
     }
-   
-    
 }
 + (void)hideWebKeyboard{
     [JYSafeKeyboardMain sharedKeyBoard].isWebInput = NO;
@@ -203,7 +201,6 @@ static JYSafeKeyboardMain *globalKeyBoard;
 }
 //键盘即将隐藏
 - (void)keyboardWillHideAction:(NSNotification*)notify{
-
 }
 
 #pragma mark - 键盘相关 view 懒加载
@@ -309,10 +306,14 @@ static JYSafeKeyboardMain *globalKeyBoard;
 //点击了输入按钮
 - (void)clickInputItem:(UIButton*)sender{
 
-    [self changeTextFieldValue:sender.titleLabel.text];
+    [self changeTextFieldValue:sender.titleLabel.text isStore:NO];
     
 }
 - (void)changeTextFieldValue:(NSString*)value{
+    [self changeTextFieldValue:value isStore:YES];
+}
+//是否为仓储输入
+- (void)changeTextFieldValue:(NSString*)value isStore:(BOOL)isStore{
     UIView * firstResponder = [JYKeyboardMainView getCurrentFirstResponder];
     if (self.isWebInput) {
         firstResponder = [JYWebviewKeyboardManager shareWebViewManager].tmpTextField;
@@ -326,8 +327,14 @@ static JYSafeKeyboardMain *globalKeyBoard;
         if (self.isWebInput) {
             range = NSMakeRange(realInputField.text.length, 0);
         }
-        realInputField.text = [realInputField.text?:@"" stringByReplacingCharactersInRange:range withString:value];
-        [realInputField keyboard_SetSelectedRange:NSMakeRange(range.location+value.length, 0)];
+        if (isStore) {
+            realInputField.text = value;
+        }else{
+        
+            realInputField.text = [realInputField.text?:@"" stringByReplacingCharactersInRange:range withString:value];
+            [realInputField keyboard_SetSelectedRange:NSMakeRange(range.location+value.length, 0)];
+        }
+        
         
 //        NSLog(@"UITextField");
     } else if ([firstResponder isKindOfClass:[UITextView class]]) {

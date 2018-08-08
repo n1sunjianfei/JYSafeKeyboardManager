@@ -40,7 +40,7 @@ NSString * const JYKeyboard_Unused_Key= @"JYKeyboard_Unused_Key";
     dispatch_once(&onceToken, ^{
         jyKeyBoardListener = [[JYKeyBoardListener alloc] init];
         // 监听键盘
-        [[NSNotificationCenter defaultCenter] addObserver:jyKeyBoardListener selector:@selector(keyboardWillShowAction:) name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:jyKeyBoardListener selector:@selector(keyboardWillShowAction:) name:UIKeyboardDidShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:jyKeyBoardListener selector:@selector(keyboardWillHideAction:) name:UIKeyboardWillHideNotification object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:jyKeyBoardListener selector:@selector(enterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -64,6 +64,7 @@ NSString * const JYKeyboard_Unused_Key= @"JYKeyboard_Unused_Key";
         [[NSUserDefaults standardUserDefaults] setValue:nil forKey:JYKeyboard_Unused_Key];
     }
     
+    
     //结束时键盘的frame
     CGRect endF = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     //键盘高度
@@ -79,27 +80,35 @@ NSString * const JYKeyboard_Unused_Key= @"JYKeyboard_Unused_Key";
     }
     //找到输入框
     [self findSubView:firstRspView];
-
+    //wkwebview直接返回，因为wkwebview已经处理过了
+    if ([self.inputView isKindOfClass:NSClassFromString(@"WKContentView")]) {
+        return;
+    }
+//    NSLog(@"class---%@",[self.inputView class]);
     //获取输入框相对于当前展示的最底层的那个view的frame
     CGRect inputFrame = [self getAbsoluteFrame:self.inputView];
     //
     CGFloat difH = CGRectGetMaxY(inputFrame)-(KBL_Screen_Height-keyboardH);
+    //
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:duration animations:^{
+            
+            if (difH>0) {
+                
+                firstRspView.transform = CGAffineTransformMakeTranslation(0,-difH);
+                
+            }else{
+                firstRspView.transform = CGAffineTransformIdentity;
+                
+            }
+            self->_lastView = firstRspView;
+        }completion:^(BOOL finished) {
+            [self addResignBtn:firstRspView];
+            
+        } ];
+    });
     // 2.动画
-    [UIView animateWithDuration:duration animations:^{
-        
-        if (difH>0) {
-            
-            firstRspView.transform = CGAffineTransformMakeTranslation(0,-difH);
-            
-        }else{
-            firstRspView.transform = CGAffineTransformIdentity;
-            
-        }
-        self->_lastView = firstRspView;
-    }completion:^(BOOL finished) {
-        [self addResignBtn:firstRspView];
-
-    } ];
+    
 }
 /**
  *  键盘即将隐藏

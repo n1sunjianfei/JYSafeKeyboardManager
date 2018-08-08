@@ -9,6 +9,7 @@
 #import "JYAppJSInteraction.h"
 #import "JYSafeKeyboard.h"
 static NSString * const methodNameLivenessDetectorFinished = @"livenessDetectorFinished";
+static NSString * const methodNameCallKeyboardFinished = @"callKeyboardFinished";
 
 @implementation JYAppJSInteractionModel
 
@@ -122,13 +123,33 @@ static NSString * const methodNameLivenessDetectorFinished = @"livenessDetectorF
 
 #pragma mark - AppJSProtocol
 
-- (void)showKeyBoard:(NSString*)param{
+- (void)callKeyboard:(NSString*)param{
     NSDictionary *dic = [self parseDictWithJsonString:param];
-    [JYSafeKeyboardConfigure defaultManager].storeValue = [dic[@"store"] floatValue];
-    [JYSafeKeyboardManager useWebViewSafeKeyboardWithType:dic[@"type"] inputId:dic[@"inputid"] webView:self.webview frameDic:nil];
+    [JYSafeKeyboardConfigure defaultManager].storeValue = [dic[@"store"] floatValue]?:1000;
+    [JYSafeKeyboardConfigure defaultManager].callBackFinishedBlock = ^(NSString *text, NSString *inputId) {
+        NSDictionary *dict = @{@"inputId":inputId,@"value":text};
+        NSString *str = [self toJsonString:dict];
+        [self evaluateJSMethodName:methodNameCallKeyboardFinished para:str];
+    };
+    [JYSafeKeyboardConfigure defaultManager].isUsedInputAccessView = NO;
+    [JYSafeKeyboardManager useWebViewSafeKeyboardWithType:dic[@"keyboardType"] inputId:dic[@"inputId"] webView:self.webview frameDic:nil];
 
 }
-
+#pragma mark --
+- (NSString *)toJsonString:(id)JSONObject {
+    
+    if (JSONObject == nil) {
+        return nil;
+    }
+    
+    NSError *error;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:JSONObject options:0 error:&error];
+    if(!data) {
+//        [StockUtil showLog:@"jsonObject转换为json字符串失败：", error];
+        return nil;
+    }
+    return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+}
 - (void)dealloc {
     
 }

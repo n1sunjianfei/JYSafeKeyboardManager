@@ -33,7 +33,7 @@
 @protocol AppJSProtocol <JSExport>
 
 
-- (void)showKeyBoard:(NSString*)param;
+- (void)callKeyboard:(NSString*)param;
 
 @end
 

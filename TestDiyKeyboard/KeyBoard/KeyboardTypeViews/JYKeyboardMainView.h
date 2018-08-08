@@ -21,6 +21,7 @@ typedef enum {
 - (void)clearAllText;
 - (void)clickInputItem:(UIButton*)sender;
 - (void)changeTextFieldValue:(NSString*)value;
+
 @end
 
 @interface JYKeyboardMainView : UIView

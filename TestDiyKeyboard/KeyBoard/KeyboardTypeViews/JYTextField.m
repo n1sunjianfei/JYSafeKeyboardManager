@@ -14,18 +14,10 @@
     [super setText:text];
     if (self.tmpWebView&&self.inputId) {
         
-        NSString *callBackName = [JYSafeKeyboardConfigure defaultManager].callBackFinishedName;
-        if (callBackName&&![callBackName isEqual:@""]) {
-            NSString *str = [NSString stringWithFormat:@"%@('{\"inputId\":\"%@\",\"value\":\"%@\"}')",callBackName, self.inputId, text];
-            if ([self.tmpWebView isKindOfClass:[WKWebView class]]) {
-                [self.tmpWebView evaluateJavaScript:str completionHandler:^(id _Nullable result, NSError * _Nullable error) {
-                    
-                }];
-            }else if ([self.tmpWebView isKindOfClass:[UIWebView class]]){
-                [self.tmpWebView stringByEvaluatingJavaScriptFromString:str];
-
-            }
+//        NSString *callBackName = [JYSafeKeyboardConfigure defaultManager].callBackFinishedName;
+        if ([JYSafeKeyboardConfigure defaultManager].callBackFinishedBlock) {
             
+            [JYSafeKeyboardConfigure defaultManager].callBackFinishedBlock(text, self.inputId);
         }else{
             if ([self.tmpWebView isKindOfClass:[WKWebView class]]) {
                 //WKWebview

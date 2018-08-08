@@ -32,7 +32,7 @@
 //是否使用InputAccessView
 @property(nonatomic,assign) BOOL isUsedInputAccessView;
 //回传value值的回调名称
-@property(nonatomic,strong) NSString *callBackFinishedName;
+@property(nonatomic,strong) void (^callBackFinishedBlock) (NSString *text,NSString *inputId);
 
 + (instancetype)defaultManager;
 

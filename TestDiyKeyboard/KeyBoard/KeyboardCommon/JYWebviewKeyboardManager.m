@@ -34,7 +34,7 @@ static JYWebviewKeyboardManager *globalManager;
     textField.inputId = inputId;
     textField.tmpWebView = webview;
     textField.safeKeyboardType = [NSNumber numberWithInteger:[self returnKeyboardType:keyboardType]];
-
+    
     __block NSString *text = @"";
     
     UIScrollView *scrollView = nil;
@@ -48,20 +48,14 @@ static JYWebviewKeyboardManager *globalManager;
         }];
         textFieldFrame.origin.y+=wkWebview.scrollView.contentOffset.y;
         textField.frame = textFieldFrame;
-    
         scrollView = wkWebview.scrollView;
-        
-        
     }else if([webview isKindOfClass:[UIWebView class]]){
         UIWebView *uiWebview = (UIWebView*)webview;
         text = [uiWebview stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.getElementById('%@').value;",inputId]];
         textField.text = text;
         textFieldFrame.origin.y+=uiWebview.scrollView.contentOffset.y;
         textField.frame = textFieldFrame;
-        
-
         scrollView = uiWebview.scrollView;
-        
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
